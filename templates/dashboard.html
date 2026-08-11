@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" data-moneda="{{ moneda }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demanda técnica · Get on Board</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>
+    /* Antes de pintar nada, para no parpadear en blanco. `?tema=` manda sobre lo
+       guardado; sin ninguno de los dos, decide el sistema. */
+    (function () {
+      var url = new URLSearchParams(location.search).get("tema");
+      var tema = url || localStorage.getItem("gob-tema");
+      if (tema === "oscuro") document.documentElement.dataset.theme = "dark";
+      else if (tema === "claro") document.documentElement.dataset.theme = "light";
+    })();
+  </script>
+</head>
+<body>
+
+<header class="cabecera">
+  <div>
+    <h1>Demanda técnica en Get on Board</h1>
+    <p class="sub">
+      {% if estado.ultimo_snapshot %}
+        Última ingesta: <time>{{ estado.ultimo_snapshot.run_at[:16].replace("T", " ") }} UTC</time>
+        · {{ estado.jobs }} ofertas · {{ estado.snapshots }} snapshot{{ "s" if estado.snapshots != 1 }}
+      {% else %}
+        Base de datos vacía
+      {% endif %}
+    </p>
+  </div>
+  <button type="button" id="conmutador-tema" class="boton-fantasma" aria-pressed="false">Tema</button>
+</header>
+
+{% if not estado.jobs %}
+<div class="aviso aviso--serio">
+  <strong>No hay datos todavía.</strong>
+  Corre <code>python -m gob.ingest --full</code> y recarga esta página.
+</div>
+{% endif %}
+
+<form class="filtros" method="get" action="/">
+  <label>
+    <span>Categoría</span>
+    <select name="categoria">
+      <option value="">Todas</option>
+      {% for slug, nombre, n in opciones.categorias %}
+        <option value="{{ slug }}" {{ "selected" if valores.categoria == slug }}>{{ nombre }} ({{ n }})</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    <span>Seniority</span>
+    <select name="seniority">
+      <option value="">Todas</option>
+      {% for clave, n in opciones.seniorities %}
+        <option value="{{ clave }}" {{ "selected" if valores.seniority == clave }}>{{ seniority_es.get(clave, clave) }} ({{ n }})</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    <span>Remoto</span>
+    <select name="remoto">
+      <option value="">Indiferente</option>
+      <option value="si" {{ "selected" if valores.remoto == "si" }}>Sí</option>
+      <option value="no" {{ "selected" if valores.remoto == "no" }}>No</option>
+    </select>
+  </label>
+
+  <label>
+    <span>País</span>
+    <select name="pais">
+      <option value="">Todos</option>
+      {% for nombre, n in opciones.paises[:25] %}
+        <option value="{{ nombre }}" {{ "selected" if valores.pais == nombre }}>{{ nombre }} ({{ n }})</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    <span>Publicadas desde</span>
+    <input type="date" name="desde" value="{{ valores.desde or '' }}">
+  </label>
+
+  <label>
+    <span>hasta</span>
+    <input type="date" name="hasta" value="{{ valores.hasta or '' }}">
+  </label>
+
+  <div class="filtros__acciones">
+    <button type="submit">Aplicar</button>
+    <a href="/" class="boton-fantasma">Limpiar</a>
+  </div>
+</form>
+
+<section class="kpis" id="kpis" aria-label="Resumen"></section>
+
+<main class="rejilla">
+
+  <section class="tarjeta tarjeta--ancha">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Tecnologías más demandadas</h2>
+        <p class="sub">Ofertas distintas que piden cada una. Un tag <em>oficial</em> lo publica la
+          empresa; el resto los deduce este proyecto leyendo la descripción.</p>
+      </div>
+      <div class="leyenda" id="leyenda-top"></div>
+    </header>
+    <div class="lienzo lienzo--alto"><canvas id="grafico-top"></canvas></div>
+    <details class="tabla-alterna"><summary>Ver como tabla</summary><div id="tabla-top"></div></details>
+  </section>
+
+  <section class="tarjeta tarjeta--ancha">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Reparto por seniority</h2>
+        <p class="sub">Las 12 tecnologías más pedidas, según a qué nivel se piden.</p>
+      </div>
+      <div class="leyenda" id="leyenda-seniority"></div>
+    </header>
+    <div class="lienzo lienzo--medio"><canvas id="grafico-seniority"></canvas></div>
+    <details class="tabla-alterna"><summary>Ver como tabla</summary><div id="tabla-seniority"></div></details>
+  </section>
+
+  <section class="tarjeta tarjeta--ancha">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Evolución entre snapshots</h2>
+        <p class="sub">Elige hasta 5 tecnologías. La serie empieza en la primera ingesta:
+          la API solo devuelve ofertas activas, no hay histórico retroactivo.</p>
+      </div>
+      <div class="leyenda" id="leyenda-tendencia"></div>
+    </header>
+    <div class="selector-tags" id="selector-tendencia"></div>
+    <div id="aviso-tendencia"></div>
+    <div class="lienzo lienzo--medio"><canvas id="grafico-tendencia"></canvas></div>
+    <details class="tabla-alterna"><summary>Ver como tabla</summary><div id="tabla-tendencia"></div></details>
+  </section>
+
+  <section class="tarjeta">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Aparecen junto a <select id="selector-coocurrencia" aria-label="Tecnología base"></select></h2>
+        <p class="sub">El <em>lift</em> dice cuántas veces más aparecen juntas de lo que
+          explicaría el azar. El conteo bruto siempre corona lo más común; el lift saca la pareja real.</p>
+      </div>
+    </header>
+    <div class="lienzo lienzo--medio"><canvas id="grafico-coocurrencia"></canvas></div>
+    <details class="tabla-alterna"><summary>Ver como tabla</summary><div id="tabla-coocurrencia"></div></details>
+  </section>
+
+  <section class="tarjeta">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Sueldos por tecnología</h2>
+        <p class="sub" id="nota-salarios"></p>
+      </div>
+    </header>
+    <div class="lienzo lienzo--medio"><canvas id="grafico-salarios"></canvas></div>
+    <details class="tabla-alterna"><summary>Ver como tabla</summary><div id="tabla-salarios"></div></details>
+  </section>
+
+  <section class="tarjeta tarjeta--ancha">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Mis brechas</h2>
+        <p class="sub">
+          Lo que se pide y no está en <code>data/mi_stack.yml</code>, ordenado por volumen.
+          La <strong>afinidad</strong> es cuánto del resto de esas ofertas ya cubres:
+          con el mismo volumen, no es lo mismo algo del mundo en el que ya estás que algo ajeno.
+        </p>
+      </div>
+    </header>
+    <div id="panel-brechas"></div>
+  </section>
+
+  <section class="tarjeta tarjeta--ancha">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Empresas que más publican</h2>
+        <p class="sub">Con el stack que domina sus ofertas.</p>
+      </div>
+    </header>
+    <div id="tabla-empresas"></div>
+  </section>
+
+  <section class="tarjeta tarjeta--ancha">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Ofertas</h2>
+        <p class="sub" id="nota-ofertas"></p>
+      </div>
+    </header>
+    <div id="tabla-ofertas"></div>
+    <div class="paginador"><button id="mas-ofertas" type="button">Ver más</button></div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <p>
+    Datos de la <a href="https://www.getonbrd.com/api/v0/" target="_blank" rel="noopener">API pública de Get on Board</a>,
+    leídos desde SQLite. Esta página no llama a la API: para actualizar, corre la ingesta.
+  </p>
+  <p class="sub">
+    Los importes son <strong>{{ moneda }}/mes</strong> por convención de Get on Board:
+    <strong>la API no expone la moneda</strong> en ningún endpoint. Es un supuesto documentado, no un dato.
+  </p>
+</footer>
+
+<script>window.GOB_QUERY = {{ query | tojson }};</script>
+<script src="/static/dashboard.js"></script>
+</body>
+</html>

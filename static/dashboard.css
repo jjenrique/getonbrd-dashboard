@@ -1,0 +1,360 @@
+/* Paleta validada con el validador de la guía de dataviz:
+   - 2 series categóricas (api / texto):     PASA todos los checks en claro y oscuro
+   - rampa ordinal de seniority (5 pasos):   PASA monotonía, ΔL, contraste y hue único
+   - 5 series de tendencia:                  PASA; en modo claro 3 tonos quedan bajo 3:1
+     contra la superficie, así que llevan etiqueta directa al final de la línea y
+     tabla alterna — que es el alivio que exige la regla. */
+
+:root {
+  color-scheme: light;
+
+  --plano:            #f9f9f7;
+  --superficie:       #fcfcfb;
+  --tinta:            #0b0b0b;
+  --tinta-2:          #52514e;
+  --tinta-apagada:    #898781;
+  --rejilla:          #e1e0d9;
+  --eje:              #c3c2b7;
+  --borde:            rgba(11, 11, 11, 0.10);
+
+  --serie-1:          #2a78d6;   /* tags oficiales de la API */
+  --serie-2:          #eb6834;   /* tags deducidos del texto */
+  --serie-3:          #1baf7a;
+  --serie-4:          #eda100;
+  --serie-5:          #e87ba4;
+
+  /* Rampa ordinal para seniority: una sola tinta, claro -> oscuro */
+  --nivel-1:          #86b6ef;
+  --nivel-2:          #5598e7;
+  --nivel-3:          #2a78d6;
+  --nivel-4:          #1c5cab;
+  --nivel-5:          #104281;
+  --nivel-sin-dato:   #c3c2b7;
+
+  --serio:            #ec835a;
+  --bien:             #006300;
+}
+
+/* Los tonos oscuros no son una inversión de los claros: son pasos elegidos para
+   el fondo oscuro y validados contra él. Se declaran en los dos ámbitos —la
+   media query cubre la preferencia del sistema, y [data-theme] el conmutador,
+   que tiene que ganar en ambas direcciones. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --plano:          #0d0d0d;
+    --superficie:     #1a1a19;
+    --tinta:          #ffffff;
+    --tinta-2:        #c3c2b7;
+    --tinta-apagada:  #898781;
+    --rejilla:        #2c2c2a;
+    --eje:            #383835;
+    --borde:          rgba(255, 255, 255, 0.10);
+
+    --serie-1:        #3987e5;
+    --serie-2:        #d95926;
+    --serie-3:        #199e70;
+    --serie-4:        #c98500;
+    --serie-5:        #d55181;
+
+    --nivel-1:        #b7d3f6;
+    --nivel-2:        #86b6ef;
+    --nivel-3:        #5598e7;
+    --nivel-4:        #2a78d6;
+    --nivel-5:        #184f95;
+    --nivel-sin-dato: #52514e;
+
+    --serio:          #ec835a;
+    --bien:           #0ca30c;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --plano:          #0d0d0d;
+  --superficie:     #1a1a19;
+  --tinta:          #ffffff;
+  --tinta-2:        #c3c2b7;
+  --tinta-apagada:  #898781;
+  --rejilla:        #2c2c2a;
+  --eje:            #383835;
+  --borde:          rgba(255, 255, 255, 0.10);
+
+  --serie-1:        #3987e5;
+  --serie-2:        #d95926;
+  --serie-3:        #199e70;
+  --serie-4:        #c98500;
+  --serie-5:        #d55181;
+
+  --nivel-1:        #b7d3f6;
+  --nivel-2:        #86b6ef;
+  --nivel-3:        #5598e7;
+  --nivel-4:        #2a78d6;
+  --nivel-5:        #184f95;
+  --nivel-sin-dato: #52514e;
+
+  --serio:          #ec835a;
+  --bien:           #0ca30c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 clamp(12px, 3vw, 32px) 64px;
+  background: var(--plano);
+  color: var(--tinta);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+h1 { font-size: 1.5rem; margin: 0 0 2px; letter-spacing: -0.01em; }
+h2 { font-size: 1.05rem; margin: 0 0 2px; letter-spacing: -0.005em; }
+a { color: var(--serie-1); }
+
+.sub { margin: 0; color: var(--tinta-2); font-size: 0.85rem; max-width: 68ch; }
+
+code {
+  font-family: ui-monospace, "Cascadia Mono", Menlo, monospace;
+  font-size: 0.85em;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* --------------------------------------------------------------- cabecera */
+
+.cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 28px 0 18px;
+}
+
+.aviso {
+  border: 1px solid var(--borde);
+  border-left: 3px solid var(--serio);
+  background: var(--superficie);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------- filtros */
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: flex-end;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+
+.filtros label { display: flex; flex-direction: column; gap: 4px; }
+.filtros label > span { font-size: 0.75rem; color: var(--tinta-2); }
+
+.filtros select,
+.filtros input {
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--tinta);
+  background: var(--plano);
+  border: 1px solid var(--eje);
+  border-radius: 6px;
+  padding: 6px 8px;
+  min-width: 140px;
+  max-width: 220px;
+}
+
+.filtros__acciones { display: flex; gap: 8px; margin-left: auto; }
+
+button, .boton-fantasma {
+  font: inherit;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button { background: var(--serie-1); color: #fff; }
+button:hover { filter: brightness(1.08); }
+
+.boton-fantasma {
+  background: transparent;
+  color: var(--tinta-2);
+  border-color: var(--eje);
+}
+.boton-fantasma:hover { color: var(--tinta); }
+
+/* ------------------------------------------------------------------- KPIs */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.kpi {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.kpi__valor { font-size: 1.9rem; line-height: 1.1; letter-spacing: -0.02em; }
+.kpi__etiqueta { font-size: 0.78rem; color: var(--tinta-2); margin-top: 2px; }
+.kpi__nota { font-size: 0.72rem; color: var(--tinta-apagada); margin-top: 4px; }
+
+/* --------------------------------------------------------------- tarjetas */
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 18px 20px 20px;
+  min-width: 0;
+}
+
+.tarjeta--ancha { grid-column: 1 / -1; }
+
+.tarjeta__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.lienzo { position: relative; width: 100%; }
+.lienzo--alto  { height: 620px; }
+.lienzo--medio { height: 340px; }
+
+/* --------------------------------------------------------------- leyendas */
+
+.leyenda { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.78rem; color: var(--tinta-2); }
+.leyenda__item { display: inline-flex; align-items: center; gap: 6px; }
+.leyenda__marca { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+
+/* ------------------------------------------------------- selector de tags */
+
+.selector-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+.pastilla {
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--eje);
+  background: transparent;
+  color: var(--tinta-2);
+}
+.pastilla[aria-pressed="true"] { color: var(--tinta); border-color: currentColor; }
+.pastilla__marca {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: baseline;
+}
+
+/* ---------------------------------------------------------------- tablas */
+
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+
+th, td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--rejilla);
+  vertical-align: top;
+}
+
+th {
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--tinta-2);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: var(--superficie);
+}
+
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr:hover { background: var(--plano); }
+
+.desplazable { overflow-x: auto; max-height: 520px; overflow-y: auto; }
+
+/* Brechas ya viene limitado a 20 filas desde el servidor: mostrarlas todas de
+   golpe es mejor que dejar media fila asomando bajo un scroll. */
+#panel-brechas .desplazable { max-height: none; }
+
+.tabla-alterna { margin-top: 12px; }
+.tabla-alterna summary {
+  font-size: 0.8rem;
+  color: var(--tinta-2);
+  cursor: pointer;
+  padding: 4px 0;
+}
+.tabla-alterna[open] summary { margin-bottom: 8px; }
+
+/* -------------------------------------------------------------- etiquetas */
+
+.marca-texto {
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--serie-2);
+  color: var(--tinta-2);
+  white-space: nowrap;
+}
+
+.barra-mini {
+  display: block;
+  height: 6px;
+  border-radius: 0 3px 3px 0;
+  background: var(--serie-1);
+  min-width: 2px;
+}
+
+.tags-oferta { color: var(--tinta-apagada); font-size: 0.78rem; }
+
+.vacio { color: var(--tinta-2); font-size: 0.875rem; padding: 24px 0; text-align: center; }
+
+/* ------------------------------------------------------------------- pie */
+
+.pie {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rejilla);
+  font-size: 0.82rem;
+  color: var(--tinta-2);
+}
+.pie p { margin: 0 0 6px; max-width: 90ch; }
+
+.paginador { margin-top: 12px; text-align: center; }
+.paginador button:disabled { opacity: 0.45; cursor: default; }
+
+@media (max-width: 640px) {
+  .rejilla { grid-template-columns: 1fr; }
+  .lienzo--alto { height: 520px; }
+  .filtros__acciones { margin-left: 0; }
+}
