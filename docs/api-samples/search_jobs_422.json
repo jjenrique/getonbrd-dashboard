@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/search/jobs?per_page=5",
+    "http_status": 422,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:46+00:00",
+    "note": "search/jobs NO sirve para listar el catalogo: exige un filtro. Por eso la ingesta usa /categories/{slug}/jobs."
+  },
+  "response": {
+    "message": "One of query, companies, featured, remote, country_code, board_host parameters is required",
+    "code": "unprocessable_content"
+  }
+}

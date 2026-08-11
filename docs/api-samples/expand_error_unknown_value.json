@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/categories/programacion/jobs?per_page=1&expand[]=perks",
+    "http_status": 500,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:50+00:00",
+    "note": "Un valor de expand no soportado tambien da HTTP 500. Hay que usar solo los verificados."
+  },
+  "response": {
+    "message": "Internal server error",
+    "code": "internal_server_error"
+  }
+}

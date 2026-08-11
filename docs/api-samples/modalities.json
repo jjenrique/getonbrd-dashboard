@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/modalities?per_page=120&lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:39+00:00",
+    "note": "Las 4 modalidades completas. Sin recortar."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "1",
+        "type": "modality",
+        "attributes": {
+          "name": "Full time",
+          "locale_key": "full_time"
+        }
+      },
+      {
+        "id": "2",
+        "type": "modality",
+        "attributes": {
+          "name": "Part time",
+          "locale_key": "part_time"
+        }
+      },
+      {
+        "id": "3",
+        "type": "modality",
+        "attributes": {
+          "name": "Freelance",
+          "locale_key": "freelance"
+        }
+      },
+      {
+        "id": "4",
+        "type": "modality",
+        "attributes": {
+          "name": "Práctica/Internship",
+          "locale_key": "internship"
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 120,
+      "total_pages": 1
+    }
+  }
+}

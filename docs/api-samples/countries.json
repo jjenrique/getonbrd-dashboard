@@ -1,0 +1,88 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/countries?per_page=120&lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:41+00:00",
+    "note": "Recortado a 10 de ~250 paises. Los ids son slugs (chile, brasil, espana)."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "afghanistan",
+        "type": "country",
+        "attributes": {
+          "name": "Afghanistan"
+        }
+      },
+      {
+        "id": "aland_islands",
+        "type": "country",
+        "attributes": {
+          "name": "Åland Islands"
+        }
+      },
+      {
+        "id": "albania",
+        "type": "country",
+        "attributes": {
+          "name": "Albania"
+        }
+      },
+      {
+        "id": "algeria",
+        "type": "country",
+        "attributes": {
+          "name": "Algeria"
+        }
+      },
+      {
+        "id": "american_samoa",
+        "type": "country",
+        "attributes": {
+          "name": "American Samoa"
+        }
+      },
+      {
+        "id": "andorra",
+        "type": "country",
+        "attributes": {
+          "name": "Andorra"
+        }
+      },
+      {
+        "id": "angola",
+        "type": "country",
+        "attributes": {
+          "name": "Angola"
+        }
+      },
+      {
+        "id": "anguilla",
+        "type": "country",
+        "attributes": {
+          "name": "Anguilla"
+        }
+      },
+      {
+        "id": "antarctica",
+        "type": "country",
+        "attributes": {
+          "name": "Antarctica"
+        }
+      },
+      {
+        "id": "antigua_and_barbuda",
+        "type": "country",
+        "attributes": {
+          "name": "Antigua and Barbuda"
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 120,
+      "total_pages": 3
+    }
+  }
+}

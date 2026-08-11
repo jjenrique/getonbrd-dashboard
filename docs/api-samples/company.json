@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/companies/admoai?lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:45+00:00",
+    "note": "Detalle de empresa. NO existe campo size/headcount. `country` es codigo ISO (CL). Textos recortados a 300 chars."
+  },
+  "response": {
+    "data": {
+      "id": "admoai",
+      "type": "company",
+      "attributes": {
+        "name": "Admoai",
+        "description": "Welcome to the future of advertising in the mobility industry! We’re a cutting-edge, highly technical startup revolutionizing how brands connect with people on the move.",
+        "long_description": "<p><strong>Who we are</strong><br>Admoai is reimagining what media means in a world on the move. Born from mobility platforms like bike-share and ride-hail, we’ve built the first ad-tech stack purpose-made for mobility apps. Brands and publishers now have a way to engage users at real, meaningful mo …[recortado para la muestra]",
+        "projects": "<div>Welcome to the future of advertising in the mobility industry! We’re a cutting-edge, highly technical startup revolutionizing how brands connect with people on the move. With a fresh $2 million pre-seed funding round in our pocket, we’re just getting started—and already making waves with sales  …[recortado para la muestra]",
+        "benefits": "<ul><li>Potential Stock Options.</li><li>Scale with a rapidly growing organisation, working with a team of fun, experienced and motivated individuals with high growth opportunities.</li><li>Private Health Insurance plan.</li><li>20 days holiday plus your birthday.</li><li>Work for an international c …[recortado para la muestra]",
+        "web": "https://admoai.com",
+        "twitter": "",
+        "github": "",
+        "facebook": "",
+        "angellist": "",
+        "country": "CL",
+        "response_time_in_days": {
+          "min": 1,
+          "max": 13
+        },
+        "logo": "https://getonbrd-prod.s3.amazonaws.com/uploads/users/logo/16478/Lockup_Pill_Purple(2).png"
+      }
+    }
+  }
+}

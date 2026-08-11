@@ -1,0 +1,98 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/tags?per_page=10",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:37+00:00",
+    "note": "Recortado a 10 de ~5.850 tags (meta.total_pages con per_page=10)."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "blogger",
+        "type": "tag",
+        "attributes": {
+          "name": "Blogger",
+          "keywords": null
+        }
+      },
+      {
+        "id": "svn",
+        "type": "tag",
+        "attributes": {
+          "name": "SVN",
+          "keywords": "SVC, SVProgressHUD, Subversion"
+        }
+      },
+      {
+        "id": "phonegap",
+        "type": "tag",
+        "attributes": {
+          "name": "PhoneGap",
+          "keywords": null
+        }
+      },
+      {
+        "id": "cake-php",
+        "type": "tag",
+        "attributes": {
+          "name": "Cake PHP",
+          "keywords": null
+        }
+      },
+      {
+        "id": "ruby-on-rails",
+        "type": "tag",
+        "attributes": {
+          "name": "Ruby on Rails",
+          "keywords": "Bundler, HAML, RoR, Rails, RoR 4+, Ruby on Jets, Rails v4, Rails 4, Rails 5, Rails 6, Rails API, Rails Frontend, Rails Architecture, Rails Action Cable, Rails Asset Pipeline, Rake, Railway"
+        }
+      },
+      {
+        "id": "clojure",
+        "type": "tag",
+        "attributes": {
+          "name": "Clojure",
+          "keywords": "ClojureScript"
+        }
+      },
+      {
+        "id": "ember-js",
+        "type": "tag",
+        "attributes": {
+          "name": "Ember.js",
+          "keywords": "Ember, EmberJS, Ender.js"
+        }
+      },
+      {
+        "id": "perl",
+        "type": "tag",
+        "attributes": {
+          "name": "Perl",
+          "keywords": null
+        }
+      },
+      {
+        "id": "clicktale",
+        "type": "tag",
+        "attributes": {
+          "name": "ClickTale",
+          "keywords": null
+        }
+      },
+      {
+        "id": "web-fonts",
+        "type": "tag",
+        "attributes": {
+          "name": "Web Fonts",
+          "keywords": null
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 10,
+      "total_pages": 586
+    }
+  }
+}

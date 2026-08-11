@@ -1,0 +1,240 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/search/jobs?query=python&per_page=2&lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:47+00:00",
+    "note": "search/jobs funcionando con `query`. Recortado a 2 ofertas y textos a 400 chars."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "ai-security-engineer-appliedsystems-com-remote",
+        "type": "job",
+        "attributes": {
+          "title": "Senior AI Security Engineer",
+          "description_headline": "What You'll Bring",
+          "description": "<ul><li>3–5+ years in security engineering or DevSecOps</li><li>Foundational understanding of ML concepts, workflows, and frameworks (PyTorch, TensorFlow, scikit-learn)</li><li>Working knowledge of LLMs, transformer architectures, and their security concerns (prompt injection, jailbreaking, data poisoning, model extraction)</li><li>Container and Kubernetes security experience, including securing A …[recortado para la muestra]",
+          "projects": "<p>We're a small, but effective IT Consultancy agency in the USA. We're looking for <strong>Senior AI Security Engineer</strong> for our client Applied Systems is building out its AI security program and looking for a security engineer to help secure our LLMs, generative AI systems, and ML infrastructure. </p><p>This is an emerging role for someone with deep traditional security fundamentals who i …[recortado para la muestra]",
+          "functions_headline": "What You'll Do",
+          "functions": "<ul><li>Assess the security posture of LLMs and generative AI systems used within or by Applied Systems</li><li>Run threat modeling and security architecture reviews for AI/ML systems and their data pipelines</li><li>Implement and maintain security controls across model training, fine-tuning, and inference infrastructure</li><li>Identify and help remediate AI-specific vulnerabilities — prompt inje …[recortado para la muestra]",
+          "benefits_headline": "Benefits",
+          "benefits": "<ul><li>Salary paid in USD to either Payoneer or Bank account (Argentina or USA)</li><li>16 national bank holidays + 10 flexible holidays off</li><li>Full remote opportunity</li><li>Flexible hours</li><li>Great senior team</li><li>Cool management</li><li>Ability to work on AI projects</li></ul>",
+          "desirable_headline": "Nice to Have",
+          "desirable": "<ul><li>Security certification (Security+, CISSP)</li><li>Hands-on experience with OpenAI / Anthropic Claude / Vertex AI / Azure OpenAI</li><li>ML security tools (Robust Intelligence, Arthur AI)</li><li>AI security research or publications</li><li>Penetration testing</li><li>Red-teaming AI systems</li></ul>",
+          "remote": true,
+          "remote_modality": "remote_local",
+          "remote_zone": null,
+          "countries": [
+            "Remoto"
+          ],
+          "lang": "en",
+          "rejected_reasons": [],
+          "category_name": "Ciberseguridad",
+          "perks": [],
+          "min_salary": 4000,
+          "max_salary": 5500,
+          "published_at": 1786392332,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 0,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": [
+              {
+                "id": 2,
+                "type": "location_tenant"
+              }
+            ]
+          },
+          "location_cities": {
+            "data": []
+          },
+          "modality": {
+            "data": {
+              "id": 1,
+              "type": "modality"
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": 4,
+              "type": "seniority"
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": 7117,
+                "type": "tag"
+              },
+              {
+                "id": 163,
+                "type": "tag"
+              },
+              {
+                "id": 36838,
+                "type": "tag"
+              },
+              {
+                "id": 12541,
+                "type": "tag"
+              },
+              {
+                "id": 18,
+                "type": "tag"
+              },
+              {
+                "id": 3893,
+                "type": "tag"
+              },
+              {
+                "id": 628,
+                "type": "tag"
+              },
+              {
+                "id": 6379,
+                "type": "tag"
+              },
+              {
+                "id": 936,
+                "type": "tag"
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": 19950,
+              "type": "company"
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/ai-security-engineer-appliedsystems-com-remote"
+        }
+      },
+      {
+        "id": "data-engineer-gcp-dillo-tech-remote",
+        "type": "job",
+        "attributes": {
+          "title": "Senior Data Engineer (Bigquery, Dbt, Python, Data Modeling)",
+          "description_headline": "What You will Need to Succeed",
+          "description": "<ul><li>6+ years of experience in Data / ETL Engineering, as well as Data / ETL Architecture and pipeline development with a minimum of 2+ years of working experience as Google Cloud Platform (GCP) developer.</li><li>Bachelor-level degree in Computer Science, MIS, or CIS, or equivalent experience.</li><li>Proven experience in building and maintaining a scalable Data Warehouse in a cloud-based data …[recortado para la muestra]",
+          "projects": "<div>We're a small, but advanced IT services company in the USA and we're looking for a Senior Data Engineer (BigQuery, DBT, Python, Data Modeling) to join a highly senior team of engineers to work on a brand new data platform for a worldwide leader in insurance technology (huge company with 10000 employees).</div><div>This new data platform is supporting both traditional BI workflows, but also is …[recortado para la muestra]",
+          "functions_headline": "What You will Do",
+          "functions": "<ul><li>Design, develop, operationalize robust and scalable data pipelines with automated data quality checks to support business needs and demonstrate ownership of live data pipelines.</li><li>Proficiency understanding and implementing data life cycles, data lineage, custom metadata, and data governance.</li><li>Proficiency implementing BigQuery SQL procedures, functions, and similar, with action …[recortado para la muestra]",
+          "benefits_headline": "Benefits",
+          "benefits": "<ul><li>Salary paid in USD to Payoneer or Argentinian/USA bank. </li><li>We cover 16 national holidays and 10 days of vacation.</li><li>Ability to work with some of the best Data engineers in the World.</li></ul>",
+          "desirable_headline": "",
+          "desirable": "",
+          "remote": true,
+          "remote_modality": "remote_local",
+          "remote_zone": null,
+          "countries": [
+            "Remoto"
+          ],
+          "lang": "en",
+          "rejected_reasons": [],
+          "category_name": "Data Science / Analytics",
+          "perks": [],
+          "min_salary": 5000,
+          "max_salary": 6500,
+          "published_at": 1786380974,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 7,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": [
+              {
+                "id": 2,
+                "type": "location_tenant"
+              }
+            ]
+          },
+          "location_cities": {
+            "data": []
+          },
+          "modality": {
+            "data": {
+              "id": 1,
+              "type": "modality"
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": 4,
+              "type": "seniority"
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": 938,
+                "type": "tag"
+              },
+              {
+                "id": 355,
+                "type": "tag"
+              },
+              {
+                "id": 128,
+                "type": "tag"
+              },
+              {
+                "id": 64,
+                "type": "tag"
+              },
+              {
+                "id": 18,
+                "type": "tag"
+              },
+              {
+                "id": 37084,
+                "type": "tag"
+              },
+              {
+                "id": 175,
+                "type": "tag"
+              },
+              {
+                "id": 1148,
+                "type": "tag"
+              },
+              {
+                "id": 1691,
+                "type": "tag"
+              },
+              {
+                "id": 53,
+                "type": "tag"
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": 19950,
+              "type": "company"
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/data-engineer-gcp-dillo-tech-remote"
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 2,
+      "total_pages": 118
+    }
+  }
+}

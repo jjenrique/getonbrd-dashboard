@@ -1,0 +1,124 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/categories/programacion/jobs?per_page=120&page=3&lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:35+00:00",
+    "note": "Prueba de que `page` funciona aunque el OpenAPI no lo documente para este endpoint. Recortado a 1 oferta; lo importante es el bloque `meta`."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "full-stack-ssr-coderslab-io-remote",
+        "type": "job",
+        "attributes": {
+          "title": "Full-Stack SSR",
+          "description_headline": "Requerimientos del cargo",
+          "description": "<ul><li>Experiencia de 2 años en desarrollo de software.</li><li>Experiencia con C#.</li><li>Experiencia con .NET Core.</li><li>Conocimiento de programación orientada a objetos.</li><li>Experiencia con Entity Framework.</li><li>Experiencia con Angular.</li><li>Conocimiento de Oracle o bases de datos relacionales similares.</li><li>Manejo de SQL.</li><li>Experiencia consumiendo o desarrollando APIs …[recortado para la muestra]",
+          "projects": "<p>En Coderslab.io ayudamos a empresas a transformar y hacer crecer sus negocios mediante soluciones tecnológicas innovadoras. Formarás parte de una organización que ya supera los 3.000 empleados a nivel global, con oficinas en América Latina y Estados Unidos. Trabajarás en equipos diversos, junto con perfiles altamente calificados (top 1% del talento tech), en proyectos exigentes y de alto impact …[recortado para la muestra]",
+          "functions_headline": "Funciones del cargo",
+          "functions": "<ul><li>Desarrollar y mantener aplicaciones backend en C# y .NET Core.</li><li>Desarrollar interfaces web utilizando Angular, idealmente versión 17 o superior.</li><li>Implementar funcionalidades conectadas a bases de datos Oracle.</li><li>Utilizar Entity Framework para acceso y manejo de datos.</li><li>Consumir y desarrollar APIs REST.</li><li>Participar en ajustes, mantenimiento o integración co …[recortado para la muestra]",
+          "benefits_headline": "Condiciones",
+          "benefits": "<p><strong><em>Modalidad de contratación:</em></strong> Prestación de servicios<br><strong><em>Duración del proyecto:</em></strong> 2 meses<br><strong><em>Horario</em></strong> 8:30 a 17:30 (Ecuador)</p>",
+          "desirable_headline": "Opcionales",
+          "desirable": "",
+          "remote": true,
+          "remote_modality": "fully_remote",
+          "remote_zone": null,
+          "countries": [
+            "Remoto"
+          ],
+          "lang": "lang_not_specified",
+          "rejected_reasons": [],
+          "category_name": "Programación",
+          "perks": [
+            "remote_full"
+          ],
+          "min_salary": 1500,
+          "max_salary": 2000,
+          "published_at": 1778083043,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 328,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": []
+          },
+          "location_cities": {
+            "data": []
+          },
+          "modality": {
+            "data": {
+              "id": 1,
+              "type": "modality"
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": 3,
+              "type": "seniority"
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": 91,
+                "type": "tag"
+              },
+              {
+                "id": 5,
+                "type": "tag"
+              },
+              {
+                "id": 1521,
+                "type": "tag"
+              },
+              {
+                "id": 74,
+                "type": "tag"
+              },
+              {
+                "id": 64,
+                "type": "tag"
+              },
+              {
+                "id": 54,
+                "type": "tag"
+              },
+              {
+                "id": 53,
+                "type": "tag"
+              },
+              {
+                "id": 3413,
+                "type": "tag"
+              },
+              {
+                "id": 104,
+                "type": "tag"
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": 13859,
+              "type": "company"
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/full-stack-ssr-coderslab-io-remote"
+        }
+      }
+    ],
+    "meta": {
+      "page": 3,
+      "per_page": 120,
+      "total_pages": 3
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/perks",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:43+00:00",
+    "note": "Recortado a 10 perks. Este endpoint NO trae `meta`."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "accessible",
+        "type": "perk",
+        "attributes": {
+          "name": "Accessible",
+          "description": "An infrastructure adequate for people with special mobility needs."
+        }
+      },
+      {
+        "id": "beverages_and_snacks",
+        "type": "perk",
+        "attributes": {
+          "name": "Beverages and snacks",
+          "description": "ACME Inc offers beverages and snacks for free consumption."
+        }
+      },
+      {
+        "id": "bicycle_parking",
+        "type": "perk",
+        "attributes": {
+          "name": "Bicycle parking",
+          "description": "You can park your bicycle for free inside the premises."
+        }
+      },
+      {
+        "id": "childcare",
+        "type": "perk",
+        "attributes": {
+          "name": "Childcare",
+          "description": "ACME Inc provides free childcare during the workday."
+        }
+      },
+      {
+        "id": "commuting_buses",
+        "type": "perk",
+        "attributes": {
+          "name": "Commuting buses",
+          "description": "ACME Inc provides free commuting buses from and to the offices."
+        }
+      },
+      {
+        "id": "commuting_stipend",
+        "type": "perk",
+        "attributes": {
+          "name": "Commuting stipend",
+          "description": "ACME Inc offers a stipend to cover some commuting costs."
+        }
+      },
+      {
+        "id": "company_retreats",
+        "type": "perk",
+        "attributes": {
+          "name": "Company retreats",
+          "description": "Team-building activities outside the premises."
+        }
+      },
+      {
+        "id": "computer_provided",
+        "type": "perk",
+        "attributes": {
+          "name": "Computer provided",
+          "description": "ACME Inc provides a computer for your work."
+        }
+      },
+      {
+        "id": "computer_repairs",
+        "type": "perk",
+        "attributes": {
+          "name": "Computer repairs",
+          "description": "ACME Inc covers some computer repair expenses."
+        }
+      },
+      {
+        "id": "conference_stipend",
+        "type": "perk",
+        "attributes": {
+          "name": "Conference stipend",
+          "description": "ACME Inc covers tickets and/or some expenses for conferences related to the position."
+        }
+      }
+    ]
+  }
+}

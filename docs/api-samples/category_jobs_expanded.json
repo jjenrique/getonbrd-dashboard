@@ -1,0 +1,566 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/categories/programacion/jobs?per_page=3&lang=es&expand[]=tags&expand[]=company&expand[]=seniority&expand[]=modality&expand[]=location_cities&expand[]=location_regions",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:32+00:00",
+    "note": "CON expand: los mismos ids ahora son SLUGS y traen attributes. Esta es la forma que usa la ingesta. Recortado a 3 ofertas y textos a 400 chars."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "ux-engineer-senior-admoai-santiago-4b10",
+        "type": "job",
+        "attributes": {
+          "title": "UX Engineer (Senior)",
+          "description_headline": "Requerimientos del cargo",
+          "description": "<ul><li><strong>5+ años de experiencia profesional en desarrollo front-end</strong>, construyendo aplicaciones web en producción con <strong>React, Next.js, TypeScript, HTML y CSS</strong>.</li><li><strong>Fundamentos sólidos de ingeniería de software</strong>, con capacidad para escribir código limpio, mantenible, testeado y de alta calidad de manera autónoma.</li><li><strong>Capacidad demostrada …[recortado para la muestra]",
+          "projects": "<p>Somos una startup tecnológica que está revolucionando cómo las marcas se conectan con las personas en movimiento. Tras levantar una ronda pre-semilla de <strong>USD $2,5 millones</strong>, estamos construyendo desde Chile una compañía global, con clientes y operaciones en cinco países de Reino Unido, Europa y Latinoamérica.<br>Somos un equipo pequeño, altamente competente y orientado a resultad …[recortado para la muestra]",
+          "functions_headline": "Funciones del cargo",
+          "functions": "<ul><li><strong>Desarrollar y evolucionar el front-end del Ad Manager</strong> y otros productos digitales utilizando <strong>Next.js, React y TypeScript</strong>, llevando requerimientos desde el mockup hasta producción con autonomía, velocidad y alta calidad técnica.</li><li><strong>Asumir progresivamente la responsabilidad del design system del Ad Manager,</strong> trabajando en conjunto con el …[recortado para la muestra]",
+          "benefits_headline": "Condiciones",
+          "benefits": "<ul><li><strong>Un asiento en primera fila en una startup multinacional</strong> con alto potencial de crecimiento explosivo, tu trabajo influirá directamente en nuestro rumbo.</li><li><strong>Compensación competitiva</strong> y opción de Stock Options.</li><li><strong>Cobertura de Salud:</strong> Seguro médico completo para ti y tu familia.</li><li><strong>Vacaciones:</strong> 20 días hábiles al  …[recortado para la muestra]",
+          "desirable_headline": "Deseables",
+          "desirable": "<ul><li><strong>Buen criterio de UX y diseño de interfaces</strong>, especialmente para simplificar productos complejos, formularios, tablas, dashboards, configuraciones avanzadas y distintos estados de interfaz.</li><li>Experiencia en <strong>productos SaaS B2B, herramientas internas o plataformas altamente configurables</strong>, con capacidad para desenvolverse frente a problemas ambiguos y req …[recortado para la muestra]",
+          "remote": false,
+          "remote_modality": "hybrid",
+          "remote_zone": null,
+          "countries": [
+            "Chile"
+          ],
+          "lang": "lang_not_specified",
+          "rejected_reasons": [],
+          "category_name": "Programación",
+          "perks": [],
+          "min_salary": null,
+          "max_salary": null,
+          "published_at": 1786391259,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 42,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": []
+          },
+          "location_cities": {
+            "data": [
+              {
+                "id": "1",
+                "type": "tenant_city",
+                "attributes": {
+                  "name": "Santiago",
+                  "country": "Chile"
+                }
+              }
+            ]
+          },
+          "modality": {
+            "data": {
+              "id": "1",
+              "type": "modality",
+              "attributes": {
+                "name": "Full time",
+                "locale_key": "full_time"
+              }
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": "4",
+              "type": "seniority",
+              "attributes": {
+                "name": "Senior",
+                "locale_key": "senior"
+              }
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": "react",
+                "type": "tag",
+                "attributes": {
+                  "name": "React",
+                  "keywords": "ReactJS, React-Native, GatsbyJS, react.js, React JS, React.ts, React Web, React 18, React ES6, React Community, React Programming, React.js"
+                }
+              },
+              {
+                "id": "next-js",
+                "type": "tag",
+                "attributes": {
+                  "name": "Next.js",
+                  "keywords": "Next JS, NextJS, Next.js 13, Next.js Frontend, Next"
+                }
+              },
+              {
+                "id": "typescript",
+                "type": "tag",
+                "attributes": {
+                  "name": "TypeScript",
+                  "keywords": "Typesafe"
+                }
+              },
+              {
+                "id": "html5",
+                "type": "tag",
+                "attributes": {
+                  "name": "HTML",
+                  "keywords": "XHTML, HTML5, HTML5 APIs, HTML5 Animation, HTML5 Boilerplate, HTML5 Canvas, HTML4, HTML/CSS, HTML Custom Elements, HTML Parsing"
+                }
+              },
+              {
+                "id": "css",
+                "type": "tag",
+                "attributes": {
+                  "name": "CSS",
+                  "keywords": "Bootstrap, OOCSS, CSS3, Sass, Bulma, Flexbox, UI Kit, Materialize, Tailwind, CSS 3, CSS2, CSS 2, CSS4, CSS3 Frameworks, CSS SASS, CSS/SCSS, CSS/SASS"
+                }
+              },
+              {
+                "id": "design-system",
+                "type": "tag",
+                "attributes": {
+                  "name": "Design System",
+                  "keywords": "design system, design systems, sistema de diseño, sistemas de diseño, atomic design, Design System, Design System Implementation, Design Systems"
+                }
+              },
+              {
+                "id": "figma",
+                "type": "tag",
+                "attributes": {
+                  "name": "Figma",
+                  "keywords": "Figma Libraries, Figma Mockups, Figma Tokens, Figma Jam, Figma FigJam, Figma Components, Figma Dev Mode, Figma Integration, FigJam"
+                }
+              },
+              {
+                "id": "ai",
+                "type": "tag",
+                "attributes": {
+                  "name": "Artificial Intelligence",
+                  "keywords": "Inteligencia Artificial, Machine Learning, ML, NLP, Natural Language Processing, NLU, Computer Vision, Deep Learning, TensorFlow, Scikit-learn, AI/ML, AgentOps, AIOps, AI Applications, AI Development, AI"
+                }
+              },
+              {
+                "id": "responsive-design",
+                "type": "tag",
+                "attributes": {
+                  "name": "Responsive Design",
+                  "keywords": "Responsive Web Design, Responsive UI Design, Responsive UX Design, Responsive CSS, Responsive HTML, Responsive Layouts, Responsive Web Apps, Responsive Web Development"
+                }
+              },
+              {
+                "id": "testing",
+                "type": "tag",
+                "attributes": {
+                  "name": "Testing",
+                  "keywords": "Agile Testing, Test Design, Test Cases, Test Documentation, Testing Fundamentals, Manual Testing, Functional Testing, TDD"
+                }
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": "admoai",
+              "type": "company",
+              "attributes": {
+                "name": "Admoai",
+                "description": "Welcome to the future of advertising in the mobility industry! We’re a cutting-edge, highly technical startup revolutionizing how brands connect with people on the move.",
+                "long_description": "<p><strong>Who we are</strong><br>Admoai is reimagining what media means in a world on the move. Born from mobility platforms like bike-share and ride-hail, we’ve built the first ad-tech stack purpose-made for mobility apps. Brands and publishers now have a way to engage users at real, meaningful mo …[recortado para la muestra]",
+                "projects": "<div>Welcome to the future of advertising in the mobility industry! We’re a cutting-edge, highly technical startup revolutionizing how brands connect with people on the move. With a fresh $2 million pre-seed funding round in our pocket, we’re just getting started—and already making waves with sales  …[recortado para la muestra]",
+                "benefits": "<ul><li>Potential Stock Options.</li><li>Scale with a rapidly growing organisation, working with a team of fun, experienced and motivated individuals with high growth opportunities.</li><li>Private Health Insurance plan.</li><li>20 days holiday plus your birthday.</li><li>Work for an international c …[recortado para la muestra]",
+                "web": "https://admoai.com",
+                "twitter": "",
+                "github": "",
+                "facebook": "",
+                "angellist": "",
+                "country": "CL",
+                "response_time_in_days": {
+                  "min": 1,
+                  "max": 13
+                },
+                "logo": "https://getonbrd-prod.s3.amazonaws.com/uploads/users/logo/16478/Lockup_Pill_Purple(2).png"
+              }
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/ux-engineer-senior-admoai-santiago-4b10"
+        }
+      },
+      {
+        "id": "senior-full-stack-software-engineer-improving-south-america-remote",
+        "type": "job",
+        "attributes": {
+          "title": "Senior Full-Stack Engineer Strong AWS",
+          "description_headline": "Qualifications:",
+          "description": "<ul><li>Bachelor’s degree in computer science or related field, or equivalent experience.</li><li>5+ years of professional software development experience, including substantial experience in system architecture.</li><li>Proven Experience designing and building scalable, distributed systems.</li><li>Strong communication skills, both written and verbal, to articulate complex ideas to various stakeh …[recortado para la muestra]",
+          "projects": "<p>Responsibilities:</p><ul><li>Develop cutting edge water management solutions in product-based workflows</li><li>Design, develop, and maintain cloud-native backend microservices using AWS, containers, and AWS Lambda.</li><li>Build scalable, high-performance water management solutions for a SaaS platform.</li><li>Develop production-quality, testable, and maintainable code.</li><li>Design and impl …[recortado para la muestra]",
+          "functions_headline": "Responsibilities:",
+          "functions": "<ul><li>Develop cutting edge water management solutions in product-based workflows</li><li>Design and implement complex backend containerized and serverless microservices on AWS while leveraging AWS Lambda.</li><li>Develop testable, readable, and effective production quality code.</li><li>Architect and implement complex, high volume/ high frequency data loading and transformation processes leverag …[recortado para la muestra]",
+          "benefits_headline": "Why join Improving?",
+          "benefits": "<ul><li>Comprehensive medical, dental, vision, and life insurance</li><li>Mental health support</li><li>Savings Fund &amp; Corporate Retirement Plan</li><li>Paid time off, vacation bonus, and Christmas bonus</li><li>Career development, certifications, and continuous learning</li><li>TotalPass wellness program</li><li>Collaborative culture with internal events and technical communities</li><li>Oppo …[recortado para la muestra]",
+          "desirable_headline": "",
+          "desirable": "",
+          "remote": true,
+          "remote_modality": "remote_local",
+          "remote_zone": null,
+          "countries": [
+            "Remoto"
+          ],
+          "lang": "en",
+          "rejected_reasons": [
+            {
+              "no_requirements": {
+                "title": "No quedan claros los requisitos del cargo",
+                "description": "La sección de \"requisitos\" es la primera que revisan los postulantes por lo que no debe haber ambigüedad sobre los conocimientos o experiencia que requiere el cargo. Te pedimos detallar si es necesario que tenga experiencia en proyectos o industrias específicas y qué tipo de cosas debe ser capaz de hacer. <strong>Si tu cargo no requiere experiencia o conocimientos previos, asegúrate de indicarlo claramente también.</strong>"
+              }
+            }
+          ],
+          "category_name": "Programación",
+          "perks": [
+            "relocation",
+            "pet_friendly",
+            "flexible_hours",
+            "health_coverage",
+            "computer_provided",
+            "informal_dresscode",
+            "vacation_over_legal",
+            "beverages_and_snacks"
+          ],
+          "min_salary": 3000,
+          "max_salary": 3500,
+          "published_at": 1786387912,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 35,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": [
+              {
+                "id": 7,
+                "type": "location_tenant"
+              }
+            ]
+          },
+          "location_cities": {
+            "data": []
+          },
+          "modality": {
+            "data": {
+              "id": "1",
+              "type": "modality",
+              "attributes": {
+                "name": "Full time",
+                "locale_key": "full_time"
+              }
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": "4",
+              "type": "seniority",
+              "attributes": {
+                "name": "Senior",
+                "locale_key": "senior"
+              }
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": "cloud-native-development",
+                "type": "tag",
+                "attributes": {
+                  "name": "Cloud Native Development",
+                  "keywords": null
+                }
+              },
+              {
+                "id": "aws-lambda",
+                "type": "tag",
+                "attributes": {
+                  "name": "AWS Lambda",
+                  "keywords": "Lambda, AWS Lambdas, Amazon Lambda"
+                }
+              },
+              {
+                "id": "api-gateway",
+                "type": "tag",
+                "attributes": {
+                  "name": "API Gateway",
+                  "keywords": "API Hub"
+                }
+              },
+              {
+                "id": "dynamodb",
+                "type": "tag",
+                "attributes": {
+                  "name": "DynamoDB",
+                  "keywords": "DynamoDB Accelerator"
+                }
+              },
+              {
+                "id": "react",
+                "type": "tag",
+                "attributes": {
+                  "name": "React",
+                  "keywords": "ReactJS, React-Native, GatsbyJS, react.js, React JS, React.ts, React Web, React 18, React ES6, React Community, React Programming, React.js"
+                }
+              },
+              {
+                "id": "microservices",
+                "type": "tag",
+                "attributes": {
+                  "name": "Microservices",
+                  "keywords": "Microservicios, Microservices APIs, Micro Services, Microservice Architecture, Microservices Architectures, Micro-services Architecture, Microservices Architecture, Microservice"
+                }
+              },
+              {
+                "id": "system-architecture",
+                "type": "tag",
+                "attributes": {
+                  "name": "System Architecture",
+                  "keywords": "Systems Architecture"
+                }
+              },
+              {
+                "id": "infrastructure-as-code",
+                "type": "tag",
+                "attributes": {
+                  "name": "Infrastructure as Code",
+                  "keywords": "IAC, Infrastructure as Code, Terraform, CloudFormation, Infrastructure-as-Code, Infraestructura como Código, Infra as Code, Infrastructure Code, Infrastructure Coding, Infrastructure Automation"
+                }
+              },
+              {
+                "id": "etl",
+                "type": "tag",
+                "attributes": {
+                  "name": "ETL",
+                  "keywords": "ETL Automation, ETL Development, ETL DataStage, ETL PowerCenter, ETL Design, ETL/ELT Automation, ETL/ELT, ETL Platforms, ETL SSIS, ETLs, ETL Tools, ETL Frameworks, ETL Pipelines, ETL Programming, ETL Mapping, ETL Processing, Extract Transform Load"
+                }
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": "improving",
+              "type": "company",
+              "attributes": {
+                "name": "Improving",
+                "description": "Improving is an IT services firm focused on AI, Data, and Applications. We modernize legacy systems, build cloud-native platforms, and deliver future-ready solutions through collaborative, long-term partnerships that drive measurable outcomes.",
+                "long_description": "<p>Improving is dedicated to creating and fostering a great work culture that exemplifies teamwork, excellence, and fun. We believe this inspires and motivates everyone while building lifelong relationships. Improving has long supported the Conscious Capitalism movement. We work to serve the interes …[recortado para la muestra]",
+                "projects": "<div>En Improving South America, brindamos servicios de TI para transformar la percepción del profesional de TI. Nos enfocamos en consultoría de TI, desarrollo de software y formación ágil.&nbsp;</div><div>La empresa promueve una cultura de trabajo excepcional basada en el trabajo en equipo, la exce …[recortado para la muestra]",
+                "benefits": "<ul><li>Contrato a largo plazo.</li><li>100% Remoto.</li><li>Vacaciones y PTOs</li><li>Posibilidad de recibir 2 bonos al año.</li><li>2 revisiones salariales al año.</li><li>Clases de inglés.</li><li>Equipamiento Apple.</li><li>Plataforma de cursos en linea</li><li>Budget para compra de libros.</li> …[recortado para la muestra]",
+                "web": "https://www.improving.com/",
+                "twitter": "ImprovingSAM",
+                "github": "improving",
+                "facebook": "improvingdallas",
+                "angellist": "",
+                "country": "US",
+                "response_time_in_days": {
+                  "min": 15,
+                  "max": 29
+                },
+                "logo": "https://getonbrd-prod.s3.amazonaws.com/uploads/users/logo/4161/improving-splash-200px.png"
+              }
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/senior-full-stack-software-engineer-improving-south-america-remote"
+        }
+      },
+      {
+        "id": "senior-full-stack-software-developer-puente-talent-partners-remote",
+        "type": "job",
+        "attributes": {
+          "title": "Lead Full-Stack Engineer",
+          "description_headline": "Who you are",
+          "description": "<ul><li>You have 5+ years building software and have shipped products end to end, not just tickets.</li><li>You have worked at a startup where the job was whatever needed doing that week.</li><li>You write TypeScript and Node without hesitation and you are comfortable in React.</li><li>You have pulled data out of other systems, through APIs or scraping, and you know what breaks: rate limits, auth, …[recortado para la muestra]",
+          "projects": "Puente Talent Partners connects top Latin American professionals with growing US companies. This role is for one of our US clients, and you would be joining their team directly while being supported by Puente through the hiring process. Our client is a venture studio, and one of the companies in their portfolio is the number one producer of scrapers on Apify. They build and run software startups,  …[recortado para la muestra]",
+          "functions_headline": "About the role",
+          "functions": "<p>You will grow the products that already make money and build the next ones. Some weeks that means scaling a scraper product with real customers on it, some weeks a new internal tool, some weeks wiring APIs together so the go-to-market team stops doing something by hand. You work directly with the founder on what to build. How it gets built is yours: put something small in front of real users, s …[recortado para la muestra]",
+          "benefits_headline": "What to expect",
+          "benefits": "<p><strong>Here is what to expect after you apply</strong></p><ol><li>You will get an email from Puente with a short online assessment and a quick grammar check.</li><li>You will record three short video answers so we can see how you communicate.</li><li>If it looks like a fit, our recruiter sets up an interview.</li><li>Shortlisted candidates are introduced to the US client team for final intervi …[recortado para la muestra]",
+          "desirable_headline": "Bonus points",
+          "desirable": "<p><strong>Bonus points</strong></p><ul><li>You have published an Actor on Apify or shipped on a similar marketplace.</li><li>You have taken a product from early traction to real scale.</li><li>You have worked inside a venture studio, agency, or holding company with several products running at once.</li><li>You have run end-to-end tests with Playwright.</li><li>You have mentored or managed enginee …[recortado para la muestra]",
+          "remote": true,
+          "remote_modality": "fully_remote",
+          "remote_zone": null,
+          "countries": [
+            "Remoto"
+          ],
+          "lang": "en",
+          "rejected_reasons": [
+            {
+              "contact_info": {
+                "title": "El empleo incluye información de contacto",
+                "description": "Todos los profesionales en Get on Board postularán al empleo exclusivamente a través de nuestra plataforma. Por favor, elimina cualquier información de contacto o instrucciones para postular de manera externa a Get on Board."
+              }
+            }
+          ],
+          "category_name": "Programación",
+          "perks": [
+            "remote_full",
+            "flexible_hours",
+            "computer_provided",
+            "informal_dresscode"
+          ],
+          "min_salary": 2000,
+          "max_salary": 3000,
+          "published_at": 1786297533,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 542,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": []
+          },
+          "location_cities": {
+            "data": []
+          },
+          "modality": {
+            "data": {
+              "id": "1",
+              "type": "modality",
+              "attributes": {
+                "name": "Full time",
+                "locale_key": "full_time"
+              }
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": "4",
+              "type": "seniority",
+              "attributes": {
+                "name": "Senior",
+                "locale_key": "senior"
+              }
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": "typescript",
+                "type": "tag",
+                "attributes": {
+                  "name": "TypeScript",
+                  "keywords": "Typesafe"
+                }
+              },
+              {
+                "id": "node-js",
+                "type": "tag",
+                "attributes": {
+                  "name": "Node.js",
+                  "keywords": "NodeJS, Node, Jade, Express, Sails.js, Koa, Express.js, MERN, Node Frameworks, Node WebKit, NW.js"
+                }
+              },
+              {
+                "id": "react",
+                "type": "tag",
+                "attributes": {
+                  "name": "React",
+                  "keywords": "ReactJS, React-Native, GatsbyJS, react.js, React JS, React.ts, React Web, React 18, React ES6, React Community, React Programming, React.js"
+                }
+              },
+              {
+                "id": "postgresql",
+                "type": "tag",
+                "attributes": {
+                  "name": "PostgreSQL",
+                  "keywords": "postgres, psql, postgre, Postgres, Postgres SQL, POSGRESQL, Postgres Extensions, PostgreSQL PL/pgSQL, PostgreSQL Queries, PostgreSQL Optimization, PostGIS, PL/pgSQL, PLpgSQL"
+                }
+              },
+              {
+                "id": "prisma",
+                "type": "tag",
+                "attributes": {
+                  "name": "Prisma",
+                  "keywords": "Prisma ORM, PRIMS, PRISM"
+                }
+              },
+              {
+                "id": "product-development",
+                "type": "tag",
+                "attributes": {
+                  "name": "Product Development",
+                  "keywords": "Product Delivery Pipeline, Products Development Life Cycle, Product Engineering, Product Enhancement"
+                }
+              },
+              {
+                "id": "github",
+                "type": "tag",
+                "attributes": {
+                  "name": "Github",
+                  "keywords": ""
+                }
+              },
+              {
+                "id": "api-integration",
+                "type": "tag",
+                "attributes": {
+                  "name": "API Integration",
+                  "keywords": ""
+                }
+              },
+              {
+                "id": "web-scraping",
+                "type": "tag",
+                "attributes": {
+                  "name": "Web Scraping",
+                  "keywords": null
+                }
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": "puente-talent-partners",
+              "type": "company",
+              "attributes": {
+                "name": "Puente Talent Partners",
+                "description": "Puente Talent helps top professionals in Latin America find remote roles with growing U.S. companies. We focus on high-quality matches, transparent USD compensation, and a clear hiring process for all operation roles. ",
+                "long_description": "<p>At Puente, we don’t just place candidates, we build bridges between elite Latin American talent and forward-thinking US companies.</p><p>We specialize in remote, USD-compensated roles that:<br>• Respect your expertise<br>• Match your ambition<br>• Elevate your career trajectory</p><p>We connect y …[recortado para la muestra]",
+                "projects": null,
+                "benefits": "<p>🌴 3 weeks of PTO<br>💵 Salary in USD<br>🎄 Your local holidays<br>🚀 Great opportunities for career growth<br>🤗 Opportunity to work in an amazing environment</p>",
+                "web": "https://puentetalent.com/",
+                "twitter": "",
+                "github": "",
+                "facebook": "",
+                "angellist": null,
+                "country": "US",
+                "response_time_in_days": {
+                  "min": 10,
+                  "max": 20
+                },
+                "logo": "https://getonbrd-prod.s3.amazonaws.com/uploads/users/logo/19305/puente_logo.jpg"
+              }
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/senior-full-stack-software-developer-puente-talent-partners-remote"
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 3,
+      "total_pages": 113
+    }
+  }
+}

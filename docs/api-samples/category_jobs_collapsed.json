@@ -1,0 +1,256 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/categories/programacion/jobs?per_page=2&lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:31+00:00",
+    "note": "SIN expand: fijate en que tags/company/seniority traen ids NUMERICOS. Recortado a 2 ofertas y textos a 400 chars."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "ux-engineer-senior-admoai-santiago-4b10",
+        "type": "job",
+        "attributes": {
+          "title": "UX Engineer (Senior)",
+          "description_headline": "Requerimientos del cargo",
+          "description": "<ul><li><strong>5+ años de experiencia profesional en desarrollo front-end</strong>, construyendo aplicaciones web en producción con <strong>React, Next.js, TypeScript, HTML y CSS</strong>.</li><li><strong>Fundamentos sólidos de ingeniería de software</strong>, con capacidad para escribir código limpio, mantenible, testeado y de alta calidad de manera autónoma.</li><li><strong>Capacidad demostrada …[recortado para la muestra]",
+          "projects": "<p>Somos una startup tecnológica que está revolucionando cómo las marcas se conectan con las personas en movimiento. Tras levantar una ronda pre-semilla de <strong>USD $2,5 millones</strong>, estamos construyendo desde Chile una compañía global, con clientes y operaciones en cinco países de Reino Unido, Europa y Latinoamérica.<br>Somos un equipo pequeño, altamente competente y orientado a resultad …[recortado para la muestra]",
+          "functions_headline": "Funciones del cargo",
+          "functions": "<ul><li><strong>Desarrollar y evolucionar el front-end del Ad Manager</strong> y otros productos digitales utilizando <strong>Next.js, React y TypeScript</strong>, llevando requerimientos desde el mockup hasta producción con autonomía, velocidad y alta calidad técnica.</li><li><strong>Asumir progresivamente la responsabilidad del design system del Ad Manager,</strong> trabajando en conjunto con el …[recortado para la muestra]",
+          "benefits_headline": "Condiciones",
+          "benefits": "<ul><li><strong>Un asiento en primera fila en una startup multinacional</strong> con alto potencial de crecimiento explosivo, tu trabajo influirá directamente en nuestro rumbo.</li><li><strong>Compensación competitiva</strong> y opción de Stock Options.</li><li><strong>Cobertura de Salud:</strong> Seguro médico completo para ti y tu familia.</li><li><strong>Vacaciones:</strong> 20 días hábiles al  …[recortado para la muestra]",
+          "desirable_headline": "Deseables",
+          "desirable": "<ul><li><strong>Buen criterio de UX y diseño de interfaces</strong>, especialmente para simplificar productos complejos, formularios, tablas, dashboards, configuraciones avanzadas y distintos estados de interfaz.</li><li>Experiencia en <strong>productos SaaS B2B, herramientas internas o plataformas altamente configurables</strong>, con capacidad para desenvolverse frente a problemas ambiguos y req …[recortado para la muestra]",
+          "remote": false,
+          "remote_modality": "hybrid",
+          "remote_zone": null,
+          "countries": [
+            "Chile"
+          ],
+          "lang": "lang_not_specified",
+          "rejected_reasons": [],
+          "category_name": "Programación",
+          "perks": [],
+          "min_salary": null,
+          "max_salary": null,
+          "published_at": 1786391259,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 42,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": []
+          },
+          "location_cities": {
+            "data": [
+              {
+                "id": 1,
+                "type": "location_city"
+              }
+            ]
+          },
+          "modality": {
+            "data": {
+              "id": 1,
+              "type": "modality"
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": 4,
+              "type": "seniority"
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": 123,
+                "type": "tag"
+              },
+              {
+                "id": 762,
+                "type": "tag"
+              },
+              {
+                "id": 259,
+                "type": "tag"
+              },
+              {
+                "id": 11,
+                "type": "tag"
+              },
+              {
+                "id": 12,
+                "type": "tag"
+              },
+              {
+                "id": 37448,
+                "type": "tag"
+              },
+              {
+                "id": 298,
+                "type": "tag"
+              },
+              {
+                "id": 162,
+                "type": "tag"
+              },
+              {
+                "id": 1218,
+                "type": "tag"
+              },
+              {
+                "id": 1694,
+                "type": "tag"
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": 16478,
+              "type": "company"
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/ux-engineer-senior-admoai-santiago-4b10"
+        }
+      },
+      {
+        "id": "senior-full-stack-software-engineer-improving-south-america-remote",
+        "type": "job",
+        "attributes": {
+          "title": "Senior Full-Stack Engineer Strong AWS",
+          "description_headline": "Qualifications:",
+          "description": "<ul><li>Bachelor’s degree in computer science or related field, or equivalent experience.</li><li>5+ years of professional software development experience, including substantial experience in system architecture.</li><li>Proven Experience designing and building scalable, distributed systems.</li><li>Strong communication skills, both written and verbal, to articulate complex ideas to various stakeh …[recortado para la muestra]",
+          "projects": "<p>Responsibilities:</p><ul><li>Develop cutting edge water management solutions in product-based workflows</li><li>Design, develop, and maintain cloud-native backend microservices using AWS, containers, and AWS Lambda.</li><li>Build scalable, high-performance water management solutions for a SaaS platform.</li><li>Develop production-quality, testable, and maintainable code.</li><li>Design and impl …[recortado para la muestra]",
+          "functions_headline": "Responsibilities:",
+          "functions": "<ul><li>Develop cutting edge water management solutions in product-based workflows</li><li>Design and implement complex backend containerized and serverless microservices on AWS while leveraging AWS Lambda.</li><li>Develop testable, readable, and effective production quality code.</li><li>Architect and implement complex, high volume/ high frequency data loading and transformation processes leverag …[recortado para la muestra]",
+          "benefits_headline": "Why join Improving?",
+          "benefits": "<ul><li>Comprehensive medical, dental, vision, and life insurance</li><li>Mental health support</li><li>Savings Fund &amp; Corporate Retirement Plan</li><li>Paid time off, vacation bonus, and Christmas bonus</li><li>Career development, certifications, and continuous learning</li><li>TotalPass wellness program</li><li>Collaborative culture with internal events and technical communities</li><li>Oppo …[recortado para la muestra]",
+          "desirable_headline": "",
+          "desirable": "",
+          "remote": true,
+          "remote_modality": "remote_local",
+          "remote_zone": null,
+          "countries": [
+            "Remoto"
+          ],
+          "lang": "en",
+          "rejected_reasons": [
+            {
+              "no_requirements": {
+                "title": "No quedan claros los requisitos del cargo",
+                "description": "La sección de \"requisitos\" es la primera que revisan los postulantes por lo que no debe haber ambigüedad sobre los conocimientos o experiencia que requiere el cargo. Te pedimos detallar si es necesario que tenga experiencia en proyectos o industrias específicas y qué tipo de cosas debe ser capaz de hacer. <strong>Si tu cargo no requiere experiencia o conocimientos previos, asegúrate de indicarlo claramente también.</strong>"
+              }
+            }
+          ],
+          "category_name": "Programación",
+          "perks": [
+            "relocation",
+            "pet_friendly",
+            "flexible_hours",
+            "health_coverage",
+            "computer_provided",
+            "informal_dresscode",
+            "vacation_over_legal",
+            "beverages_and_snacks"
+          ],
+          "min_salary": 3000,
+          "max_salary": 3500,
+          "published_at": 1786387912,
+          "response_time_in_days": {
+            "min": null,
+            "max": null
+          },
+          "applications_count": 35,
+          "location_regions": {
+            "data": []
+          },
+          "location_tenants": {
+            "data": [
+              {
+                "id": 7,
+                "type": "location_tenant"
+              }
+            ]
+          },
+          "location_cities": {
+            "data": []
+          },
+          "modality": {
+            "data": {
+              "id": 1,
+              "type": "modality"
+            }
+          },
+          "seniority": {
+            "data": {
+              "id": 4,
+              "type": "seniority"
+            }
+          },
+          "tags": {
+            "data": [
+              {
+                "id": 74514,
+                "type": "tag"
+              },
+              {
+                "id": 733,
+                "type": "tag"
+              },
+              {
+                "id": 1259,
+                "type": "tag"
+              },
+              {
+                "id": 310,
+                "type": "tag"
+              },
+              {
+                "id": 123,
+                "type": "tag"
+              },
+              {
+                "id": 156,
+                "type": "tag"
+              },
+              {
+                "id": 37640,
+                "type": "tag"
+              },
+              {
+                "id": 628,
+                "type": "tag"
+              },
+              {
+                "id": 175,
+                "type": "tag"
+              }
+            ]
+          },
+          "company": {
+            "data": {
+              "id": 4161,
+              "type": "company"
+            }
+          }
+        },
+        "links": {
+          "public_url": "https://www.getonbrd.com/jobs/senior-full-stack-software-engineer-improving-south-america-remote"
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 2,
+      "total_pages": 169
+    }
+  }
+}

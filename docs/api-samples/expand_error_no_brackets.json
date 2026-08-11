@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/categories/programacion/jobs?per_page=1&expand=tags",
+    "http_status": 500,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:49+00:00",
+    "note": "`expand` sin corchetes revienta el servidor: HTTP 500, no 422."
+  },
+  "response": {
+    "message": "Internal server error",
+    "code": "internal_server_error"
+  }
+}

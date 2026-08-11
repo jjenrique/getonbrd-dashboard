@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "url": "https://www.getonbrd.com/api/v0/categories?per_page=120&lang=es",
+    "http_status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "fetched_at": "2026-08-11T05:14:29+00:00",
+    "note": "Las 18 categorias completas. Sin recortar."
+  },
+  "response": {
+    "data": [
+      {
+        "id": "machine-learning-ai",
+        "type": "category",
+        "attributes": {
+          "name": "Machine Learning & AI",
+          "dimension": "machine_learning"
+        }
+      },
+      {
+        "id": "programacion",
+        "type": "category",
+        "attributes": {
+          "name": "Programación",
+          "dimension": "programming"
+        }
+      },
+      {
+        "id": "comercial-ventas",
+        "type": "category",
+        "attributes": {
+          "name": "Comercial y Ventas",
+          "dimension": "sales"
+        }
+      },
+      {
+        "id": "education-coaching",
+        "type": "category",
+        "attributes": {
+          "name": "Education & Coaching",
+          "dimension": "education_coaching"
+        }
+      },
+      {
+        "id": "cybersecurity",
+        "type": "category",
+        "attributes": {
+          "name": "Cybersecurity",
+          "dimension": "cybersecurity"
+        }
+      },
+      {
+        "id": "sysadmin-devops-qa",
+        "type": "category",
+        "attributes": {
+          "name": "SysAdmin / DevOps / QA",
+          "dimension": "sysadmin"
+        }
+      },
+      {
+        "id": "data-science-analytics",
+        "type": "category",
+        "attributes": {
+          "name": "Data / Analytics",
+          "dimension": "data_analytics"
+        }
+      },
+      {
+        "id": "desarrollo-mobile",
+        "type": "category",
+        "attributes": {
+          "name": "Desarrollo Mobile",
+          "dimension": "mobile"
+        }
+      },
+      {
+        "id": "marketing-digital",
+        "type": "category",
+        "attributes": {
+          "name": "Marketing Digital",
+          "dimension": "digital_marketing"
+        }
+      },
+      {
+        "id": "publicidad-medios",
+        "type": "category",
+        "attributes": {
+          "name": "Publicidad y Medios",
+          "dimension": "advertising_media"
+        }
+      },
+      {
+        "id": "diseno-ux",
+        "type": "category",
+        "attributes": {
+          "name": "Diseño / UX",
+          "dimension": "design"
+        }
+      },
+      {
+        "id": "innovacion-agilidad",
+        "type": "category",
+        "attributes": {
+          "name": "Innovación y Agilidad",
+          "dimension": "innovation_agile"
+        }
+      },
+      {
+        "id": "operaciones-management",
+        "type": "category",
+        "attributes": {
+          "name": "Operaciones / Management",
+          "dimension": "operations"
+        }
+      },
+      {
+        "id": "technical-support",
+        "type": "category",
+        "attributes": {
+          "name": "Technical Support",
+          "dimension": "technical_support"
+        }
+      },
+      {
+        "id": "servicio-cliente",
+        "type": "category",
+        "attributes": {
+          "name": "Servicio al Cliente",
+          "dimension": "customer_support"
+        }
+      },
+      {
+        "id": "recursos-humanos",
+        "type": "category",
+        "attributes": {
+          "name": "Recursos Humanos",
+          "dimension": "hr"
+        }
+      },
+      {
+        "id": "otra",
+        "type": "category",
+        "attributes": {
+          "name": "Otra",
+          "dimension": "other"
+        }
+      },
+      {
+        "id": "hardware-electronics",
+        "type": "category",
+        "attributes": {
+          "name": "Hardware / Electronics",
+          "dimension": "hardware"
+        }
+      }
+    ],
+    "meta": {
+      "page": 1,
+      "per_page": 120,
+      "total_pages": 1
+    }
+  }
+}
