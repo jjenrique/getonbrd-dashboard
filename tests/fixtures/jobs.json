@@ -1,0 +1,137 @@
+[
+  {
+    "id": "j01", "title": "Backend Python Senior", "url": "https://ejemplo/j01",
+    "company_id": "acme", "company_name": "Acme",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "senior", "modality": "full_time", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Chile"], "cities": ["Santiago"],
+    "min_salary": 2000, "max_salary": 3000, "currency": "USD", "published_at": 1750000000,
+    "tags": [["python", "Python", "api"], ["django", "Django", "api"], ["postgresql", "PostgreSQL", "api"], ["docker", "Docker", "text"]]
+  },
+  {
+    "id": "j02", "title": "Tech Lead Django", "url": "https://ejemplo/j02",
+    "company_id": "acme", "company_name": "Acme",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "senior", "modality": "full_time", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Remoto"], "cities": [],
+    "min_salary": 3000, "max_salary": 4000, "currency": "USD", "published_at": 1750100000,
+    "tags": [["python", "Python", "api"], ["django", "Django", "api"], ["aws", "AWS", "api"]]
+  },
+  {
+    "id": "j03", "title": "Desarrollador Python", "url": "https://ejemplo/j03",
+    "company_id": "beta", "company_name": "Beta SpA",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "semi_senior", "modality": "full_time", "remote": false, "remote_modality": "hybrid",
+    "countries": ["Chile"], "cities": ["Santiago", "Valparaíso"],
+    "min_salary": 1000, "max_salary": 2000, "currency": "USD", "published_at": 1750200000,
+    "tags": [["python", "Python", "api"], ["postgresql", "PostgreSQL", "api"]]
+  },
+  {
+    "id": "j04", "title": "Programador Junior", "url": "https://ejemplo/j04",
+    "company_id": "beta", "company_name": "Beta SpA",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "junior", "modality": "full_time", "remote": false, "remote_modality": "no_remote",
+    "countries": ["Peru"], "cities": ["Lima"],
+    "min_salary": null, "max_salary": null, "currency": "USD", "published_at": 1750300000,
+    "tags": [["python", "Python", "api"], ["javascript", "JavaScript", "api"]]
+  },
+  {
+    "id": "j05", "title": "SRE", "url": "https://ejemplo/j05",
+    "company_id": "beta", "company_name": "Beta SpA",
+    "category_slug": "sysadmin-devops-qa", "category_name": "SysAdmin / DevOps / QA",
+    "seniority": "senior", "modality": "full_time", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Remoto"], "cities": [],
+    "min_salary": 4000, "max_salary": 5000, "currency": "USD", "published_at": 1750400000,
+    "tags": [["python", "Python", "api"], ["docker", "Docker", "api"], ["kubernetes", "Kubernetes", "api"], ["aws", "AWS", "api"]]
+  },
+  {
+    "id": "j06", "title": "DevOps multipaís", "url": "https://ejemplo/j06",
+    "company_id": "gamma", "company_name": "Gamma",
+    "category_slug": "sysadmin-devops-qa", "category_name": "SysAdmin / DevOps / QA",
+    "seniority": "semi_senior", "modality": "full_time", "remote": true, "remote_modality": "remote_local",
+    "countries": ["Chile", "Peru"], "cities": [],
+    "min_salary": 2500, "max_salary": 2500, "currency": "USD", "published_at": 1750500000,
+    "tags": [["docker", "Docker", "api"], ["kubernetes", "Kubernetes", "api"], ["terraform", "Terraform", "text"]]
+  },
+  {
+    "id": "j07", "title": "Administrador de plataformas", "url": "https://ejemplo/j07",
+    "company_id": "gamma", "company_name": "Gamma",
+    "category_slug": "sysadmin-devops-qa", "category_name": "SysAdmin / DevOps / QA",
+    "seniority": "senior", "modality": "full_time", "remote": false, "remote_modality": "no_remote",
+    "countries": ["Chile"], "cities": ["Santiago"],
+    "min_salary": null, "max_salary": null, "currency": "USD", "published_at": 1750600000,
+    "tags": [["docker", "Docker", "api"], ["kubernetes", "Kubernetes", "api"]]
+  },
+  {
+    "id": "j08", "title": "Data Engineer Expert", "url": "https://ejemplo/j08",
+    "company_id": "gamma", "company_name": "Gamma",
+    "category_slug": "data-science-analytics", "category_name": "Data / Analytics",
+    "seniority": "expert", "modality": "full_time", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Remoto"], "cities": [],
+    "min_salary": 5000, "max_salary": 6000, "currency": "USD", "published_at": 1750700000,
+    "tags": [["python", "Python", "api"], ["sql", "SQL", "api"], ["spark", "Spark", "text"]]
+  },
+  {
+    "id": "j09", "title": "Practicante de datos", "url": "https://ejemplo/j09",
+    "company_id": "delta", "company_name": "Delta",
+    "category_slug": "data-science-analytics", "category_name": "Data / Analytics",
+    "seniority": "no_experience", "modality": "internship", "remote": false, "remote_modality": "no_remote",
+    "countries": ["Chile"], "cities": ["Concepción"],
+    "min_salary": null, "max_salary": null, "currency": "USD", "published_at": 1750800000,
+    "tags": [["sql", "SQL", "api"], ["excel", "Excel", "api"]]
+  },
+  {
+    "id": "j10", "title": "Analista de datos", "url": "https://ejemplo/j10",
+    "company_id": "delta", "company_name": "Delta",
+    "category_slug": "data-science-analytics", "category_name": "Data / Analytics",
+    "seniority": "semi_senior", "modality": "full_time", "remote": false, "remote_modality": "hybrid",
+    "countries": ["Mexico"], "cities": ["Ciudad de México"],
+    "min_salary": 1500, "max_salary": 1800, "currency": "USD", "published_at": 1750900000,
+    "tags": [["sql", "SQL", "api"], ["python", "Python", "api"]]
+  },
+  {
+    "id": "j11", "title": "Frontend sin seniority declarada", "url": "https://ejemplo/j11",
+    "company_id": "delta", "company_name": "Delta",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": null, "modality": "freelance", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Remoto"], "cities": [],
+    "min_salary": null, "max_salary": null, "currency": "USD", "published_at": 1751000000,
+    "tags": [["javascript", "JavaScript", "api"], ["react", "React", "api"]]
+  },
+  {
+    "id": "j12", "title": "Frontend Senior", "url": "https://ejemplo/j12",
+    "company_id": "epsilon", "company_name": "Epsilon",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "senior", "modality": "full_time", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Remoto"], "cities": [],
+    "min_salary": 3500, "max_salary": 3500, "currency": "USD", "published_at": 1751100000,
+    "tags": [["javascript", "JavaScript", "api"], ["react", "React", "api"], ["typescript", "TypeScript", "api"]]
+  },
+  {
+    "id": "j13", "title": "Diseñador sin tags", "url": "https://ejemplo/j13",
+    "company_id": "epsilon", "company_name": "Epsilon",
+    "category_slug": "diseno-ux", "category_name": "Diseño / UX",
+    "seniority": "junior", "modality": "part_time", "remote": false, "remote_modality": "no_remote",
+    "countries": ["Chile"], "cities": ["Santiago"],
+    "min_salary": null, "max_salary": null, "currency": "USD", "published_at": 1751200000,
+    "tags": []
+  },
+  {
+    "id": "j14", "title": "Full-stack con IA", "url": "https://ejemplo/j14",
+    "company_id": "epsilon", "company_name": "Epsilon",
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "senior", "modality": "full_time", "remote": true, "remote_modality": "fully_remote",
+    "countries": ["Remoto"], "cities": [],
+    "min_salary": 2800, "max_salary": 3200, "currency": "USD", "published_at": 1751300000,
+    "tags": [["python", "Python", "api"], ["react", "React", "api"], ["llm", "LLMs", "text"]]
+  },
+  {
+    "id": "j15", "title": "Backend sin empresa asociada", "url": "https://ejemplo/j15",
+    "company_id": null, "company_name": null,
+    "category_slug": "programacion", "category_name": "Programación",
+    "seniority": "semi_senior", "modality": "full_time", "remote": false, "remote_modality": "hybrid",
+    "countries": ["Chile"], "cities": ["Santiago"],
+    "min_salary": null, "max_salary": null, "currency": "USD", "published_at": 1751400000,
+    "tags": [["python", "Python", "api"], ["java", "Java", "api"]]
+  }
+]

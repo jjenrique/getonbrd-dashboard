@@ -1,0 +1,172 @@
+{
+  "_meta": {
+    "nota": "Payloads con la forma EXACTA de GET /categories/{slug}/jobs?expand[]=... Los dos primeros son recortes reales (11-ago-2026) con los textos acortados; el tercero es inventado para cubrir el caso degenerado en el que las relaciones llegan colapsadas.",
+    "ver": "docs/api-samples/category_jobs_expanded.json"
+  },
+  "data": [
+    {
+      "id": "ux-engineer-senior-admoai-santiago-4b10",
+      "type": "job",
+      "links": { "public_url": "https://www.getonbrd.com/jobs/ux-engineer-senior-admoai-santiago-4b10" },
+      "attributes": {
+        "title": "UX Engineer (Senior)",
+        "description_headline": "Requerimientos del cargo",
+        "description": "<ul><li><strong>5+ años</strong> con <strong>React, Next.js y TypeScript</strong>.</li><li>Experiencia con Docker.</li></ul>",
+        "projects": "<p>Startup de ad-tech para movilidad.</p>",
+        "functions_headline": "Funciones del cargo",
+        "functions": "<ul><li>Desarrollar el front-end del Ad Manager.</li></ul>",
+        "benefits_headline": "Condiciones",
+        "benefits": "<ul><li>Compensación competitiva.</li></ul>",
+        "desirable_headline": "Deseables",
+        "desirable": "<ul><li>Buen criterio de UX.</li></ul>",
+        "remote": false,
+        "remote_modality": "hybrid",
+        "remote_zone": null,
+        "countries": ["Chile"],
+        "lang": "lang_not_specified",
+        "rejected_reasons": [],
+        "category_name": "Programación",
+        "perks": [],
+        "min_salary": null,
+        "max_salary": null,
+        "published_at": 1786391259,
+        "response_time_in_days": { "min": null, "max": null },
+        "applications_count": 41,
+        "location_regions": { "data": [] },
+        "location_tenants": { "data": [] },
+        "location_cities": {
+          "data": [{ "id": "1", "type": "tenant_city", "attributes": { "name": "Santiago", "country": "Chile" } }]
+        },
+        "modality": { "data": { "id": "1", "type": "modality", "attributes": { "name": "Full time", "locale_key": "full_time" } } },
+        "seniority": { "data": { "id": "4", "type": "seniority", "attributes": { "name": "Senior", "locale_key": "senior" } } },
+        "tags": {
+          "data": [
+            { "id": "react", "type": "tag", "attributes": { "name": "React", "keywords": "ReactJS, React-Native" } },
+            { "id": "next-js", "type": "tag", "attributes": { "name": "Next.js", "keywords": "NextJS" } },
+            { "id": "typescript", "type": "tag", "attributes": { "name": "TypeScript", "keywords": null } },
+            { "id": "html5", "type": "tag", "attributes": { "name": "HTML", "keywords": "HTML5" } }
+          ]
+        },
+        "company": {
+          "data": {
+            "id": "admoai",
+            "type": "company",
+            "attributes": {
+              "name": "Admoai",
+              "description": "Ad-tech para movilidad.",
+              "long_description": "<p>Recortado.</p>",
+              "projects": null,
+              "benefits": null,
+              "web": "https://admoai.com",
+              "twitter": "",
+              "github": "",
+              "facebook": "",
+              "angellist": "",
+              "country": "CL",
+              "response_time_in_days": { "min": 1, "max": 13 },
+              "logo": "https://ejemplo/logo.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "devops-multipais-ejemplo-remote",
+      "type": "job",
+      "links": { "public_url": "https://www.getonbrd.com/jobs/devops-multipais-ejemplo-remote" },
+      "attributes": {
+        "title": "DevOps Engineer",
+        "description_headline": null,
+        "description": "<p>Buscamos experiencia en Kubernetes, Terraform y Modbus TCP para plantas SCADA.</p>",
+        "projects": "",
+        "functions_headline": null,
+        "functions": "<ul><li>Mantener clusters.</li></ul>",
+        "benefits_headline": null,
+        "benefits": "",
+        "desirable_headline": null,
+        "desirable": "<p>Deseable Grafana.</p>",
+        "remote": true,
+        "remote_modality": "remote_local",
+        "remote_zone": null,
+        "countries": ["Chile", "Peru"],
+        "lang": "es",
+        "rejected_reasons": [],
+        "category_name": "SysAdmin / DevOps / QA",
+        "perks": ["flexible_hours", "computer_provided"],
+        "min_salary": 2500,
+        "max_salary": 3500,
+        "published_at": 1786300000,
+        "response_time_in_days": { "min": 2, "max": 9 },
+        "applications_count": 7,
+        "location_regions": { "data": [] },
+        "location_tenants": { "data": [] },
+        "location_cities": {
+          "data": [
+            { "id": "1", "type": "tenant_city", "attributes": { "name": "Santiago", "country": "Chile" } },
+            { "id": "15", "type": "tenant_city", "attributes": { "name": "Lima", "country": "Peru" } }
+          ]
+        },
+        "modality": { "data": { "id": "1", "type": "modality", "attributes": { "name": "Full time", "locale_key": "full_time" } } },
+        "seniority": { "data": { "id": "3", "type": "seniority", "attributes": { "name": "Semi Senior", "locale_key": "semi_senior" } } },
+        "tags": {
+          "data": [
+            { "id": "kubernetes", "type": "tag", "attributes": { "name": "Kubernetes", "keywords": "K8s" } },
+            { "id": "cloud-gcp", "type": "tag", "attributes": { "name": "Google Cloud Platform", "keywords": null } }
+          ]
+        },
+        "company": {
+          "data": {
+            "id": "gamma",
+            "type": "company",
+            "attributes": {
+              "name": "Gamma",
+              "description": "",
+              "long_description": "",
+              "projects": null,
+              "benefits": null,
+              "web": "",
+              "twitter": null,
+              "github": null,
+              "facebook": null,
+              "angellist": null,
+              "country": "PE",
+              "response_time_in_days": { "min": null, "max": null },
+              "logo": ""
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "oferta-con-relaciones-colapsadas",
+      "type": "job",
+      "links": { "public_url": "https://www.getonbrd.com/jobs/oferta-con-relaciones-colapsadas" },
+      "attributes": {
+        "title": "Oferta sin expand",
+        "description": "<p>Sin tecnologías reconocibles.</p>",
+        "projects": null,
+        "functions": null,
+        "benefits": null,
+        "desirable": null,
+        "remote": false,
+        "remote_modality": "no_remote",
+        "remote_zone": null,
+        "countries": [],
+        "lang": "es",
+        "category_name": "Otra",
+        "perks": [],
+        "min_salary": null,
+        "max_salary": null,
+        "published_at": 1786200000,
+        "applications_count": 0,
+        "location_regions": { "data": [] },
+        "location_tenants": { "data": [] },
+        "location_cities": { "data": [] },
+        "modality": { "data": { "id": 1, "type": "modality" } },
+        "seniority": { "data": { "id": 2, "type": "seniority" } },
+        "tags": { "data": [] },
+        "company": { "data": { "id": 16478, "type": "company" } }
+      }
+    }
+  ]
+}
