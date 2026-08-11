@@ -1,30 +1,86 @@
-# Mi stack — EDITA ESTO
+# Mi stack — Kike (derivado del CV, revisar y ajustar)
 #
 # Lo que ya manejas. El panel "brechas" del dashboard resta esto de lo que pide
 # el mercado y ordena lo que falta por cuántas ofertas te abriría.
 #
-# Lo de abajo es un EJEMPLO para que el panel tenga algo que mostrar en la
-# primera corrida. Cámbialo por tu stack real o los resultados no significan nada.
+# REGLA: acá va solo lo que puedes defender en una entrevista técnica hoy.
+# Lo que estás aprendiendo NO va acá — si lo pones, deja de aparecer como brecha.
 #
 # Los nombres se slugifican y se les aplica data/tag_aliases.yml, así que da
 # igual escribir "Node.js", "node-js" o "NodeJS".
-#
-# Puedes usar una lista plana o agruparlo por áreas como aquí — ambas valen.
 
 lenguajes:
   - Python
-  - JavaScript
+  - PHP
+  - C
   - SQL
+  - HTML
+  - CSS
+  - Bash
+  - Matlab
 
 backend:
-  - FastAPI
   - REST
+  - APIs
+  # - Django          # sin evidencia en el CV: descoméntalo si lo defiendes hoy
 
 datos:
-  - PostgreSQL
+  - MySQL
   - Pandas
+  - NumPy
+  - Análisis de datos
+  # OpenCV va acá o en "otros" según cómo lo taguee el mercado
+  - OpenCV
+
+sistemas_e_infraestructura:
+  - Linux
+  - NGINX
+  - AWS
+  - DigitalOcean
+  - VPS
+  - Administración de servidores
+  - Virtualización
+
+redes:
+  - Routing
+  - NAT
+  - Firewall
+  - DNS
+  - VPN
+  - OpenVPN
+  - SSL
+  - TLS
+  - Redes inalámbricas
+  - WiFi
+  - TCP/IP
+  - 4G
+  - LTE
 
 herramientas:
   - Git
-  - Linux
-  - Docker
+  - CLI
+  - LaTeX
+  - FFmpeg
+  - Excel
+
+automatizacion_y_electricidad:
+  # Estos casi no aparecen como tags en portales de software, pero sí en
+  # ofertas de automatización industrial e integración.
+  - PLC
+  - Instrumentación
+  - SCADA
+  - IoT
+  - Simulink
+  - Electricidad industrial
+
+video_y_telemetria:
+  - CCTV
+  - Streaming
+  - MDVR
+
+# ---------------------------------------------------------------------------
+# NO agregar acá (es tu objetivo, tiene que salir como brecha):
+#   Docker, Kubernetes, Terraform, CI/CD, Ansible, PostgreSQL,
+#   Modbus, DNP3, IEC 61850, Purdue, IDS/IPS, Wireshark, Zeek,
+#   Nozomi, Claroty, Splunk, Django/FastAPI si aún no los tienes en producción.
+# ---------------------------------------------------------------------------

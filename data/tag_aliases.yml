@@ -71,6 +71,34 @@ project-management:
   # Bug de datos de la API: el tag "Project Management" llega con un UUID pegado.
   - project-management-476aadeb-cbb6-4da2-ae8e-ecb46735b62b
 
+cpp:
+  # Otro slug corrompido: el tag "C++" llega como "c--2".
+  - c--2
+
+# Puentes castellano -> slug de la API. Sin esto, lo que escribes en
+# mi_stack.yml en español no casa con nada y sale como "sin demanda".
+data-analysis:
+  - analisis-de-datos
+  - data-analytics
+
+api:
+  - apis
+
+virtualization:
+  - virtualizacion
+
+networking:
+  - tcp-ip
+  - redes
+  - redes-de-datos
+
+wi-fi:
+  - wifi
+  - redes-inalambricas
+
+linux-administration:
+  - administracion-de-servidores
+
 # Candidatos que deliberadamente NO agrupo, porque distinguirlos dice algo:
 #   api-design / api-development / api-integration / api-testing  (fases distintas)
 #   testing / unit-testing / functional-testing / quality-assurance
