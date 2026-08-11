@@ -1,0 +1,78 @@
+# Alias de tags — EDITABLE A MANO
+#
+# La clave es el slug canónico; la lista son los slugs de la API que se agrupan
+# bajo él. Todo se slugifica antes de comparar, así que da igual mayúsculas y
+# tildes ("Python 3" == "python-3").
+#
+# Los tags de Get on Board ya vienen slugificados y son bastante buenos, así que
+# esto es solo para duplicados semánticos reales. Todos los de abajo se
+# observaron en ofertas activas el 11-ago-2026.
+#
+# Después de editar este archivo, para que la BD refleje los cambios sin volver
+# a llamar a la API:
+#     python -m gob.ingest --refresh-aliases
+
+angular:
+  - angularjs        # la API usa el slug "angularjs" con name "Angular"
+  - angular-js
+
+dotnet:
+  - net              # slug "net", name ".Net"
+  - asp-net
+  - net-core
+  - dotnet-core
+
+html:
+  - html5            # slug "html5", name "HTML"
+
+nodejs:
+  - node-js
+  - node
+
+csharp:
+  - c-sharp
+
+gcp:
+  - cloud-gcp        # slug "cloud-gcp", name "Google Cloud Platform"
+  - google-cloud
+  - google-cloud-platform
+
+postgresql:
+  - postgres
+
+rest:
+  - restful-api      # "REST API" y "RESTful API" conviven como tags distintos
+
+automation:
+  - automatizacion   # el tag está en español, el name en inglés ("Automation")
+
+test-automation:
+  - automated-testing
+
+agile:
+  - agile-methodology
+
+frontend:
+  - front-end
+  - frontend-development
+
+backend:
+  - back-end
+  - backend-development
+
+cybersecurity:
+  - security-engineer   # slug "security-engineer" con name "Cybersecurity"
+
+cloud-computing:
+  - cloud
+  - cloud-platforms
+
+project-management:
+  # Bug de datos de la API: el tag "Project Management" llega con un UUID pegado.
+  - project-management-476aadeb-cbb6-4da2-ae8e-ecb46735b62b
+
+# Candidatos que deliberadamente NO agrupo, porque distinguirlos dice algo:
+#   api-design / api-development / api-integration / api-testing  (fases distintas)
+#   testing / unit-testing / functional-testing / quality-assurance
+#   ai / ai-tools / generative-ai / large-language-models
+#   data-lake / data-pipeline / data-engineering / data-architecture

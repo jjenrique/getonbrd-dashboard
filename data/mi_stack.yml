@@ -1,0 +1,30 @@
+# Mi stack — EDITA ESTO
+#
+# Lo que ya manejas. El panel "brechas" del dashboard resta esto de lo que pide
+# el mercado y ordena lo que falta por cuántas ofertas te abriría.
+#
+# Lo de abajo es un EJEMPLO para que el panel tenga algo que mostrar en la
+# primera corrida. Cámbialo por tu stack real o los resultados no significan nada.
+#
+# Los nombres se slugifican y se les aplica data/tag_aliases.yml, así que da
+# igual escribir "Node.js", "node-js" o "NodeJS".
+#
+# Puedes usar una lista plana o agruparlo por áreas como aquí — ambas valen.
+
+lenguajes:
+  - Python
+  - JavaScript
+  - SQL
+
+backend:
+  - FastAPI
+  - REST
+
+datos:
+  - PostgreSQL
+  - Pandas
+
+herramientas:
+  - Git
+  - Linux
+  - Docker

@@ -1,0 +1,301 @@
+# Tecnologías buscadas en el TEXTO de la oferta — EDITABLE A MANO
+#
+# Los tags oficiales de Get on Board son buenos pero topan en 10 por oferta y no
+# cubren lo de nicho (OT/industrial, herramientas concretas de datos). Esto
+# rellena ese hueco leyendo description/functions/desirable/projects/benefits.
+#
+# Formato:
+#   slug-canonico:
+#     name: Nombre a mostrar
+#     match: [formas a buscar en el texto]     # opcional; por defecto, `name`
+#
+# Lo que salga de aquí se guarda con source='text' y se muestra distinto en el
+# dashboard. Si una oferta ya trae el tag oficial, el oficial manda.
+#
+# CUIDADO con términos de 1-2 letras ("R", "Go", "C") o palabras comunes ("Excel"
+# como verbo en inglés): la búsqueda respeta fronteras de palabra, pero "Go" sí
+# casaría en "go to production". Esos ya vienen bien cubiertos por los tags
+# oficiales, así que no están aquí a propósito.
+
+# ---------------------------------------------------------------- contenedores
+docker:
+  name: Docker
+  match: [Docker, dockerizar, dockerización, docker-compose, Dockerfile]
+kubernetes:
+  name: Kubernetes
+  match: [Kubernetes, K8s, EKS, AKS, GKE, OpenShift, Helm]
+containerization:
+  name: Containerización
+  match: [containerización, contenedorización, Podman, containerd]
+
+# --------------------------------------------------------------- infra as code
+terraform:
+  name: Terraform
+  match: [Terraform, Terragrunt, OpenTofu]
+ansible:
+  name: Ansible
+  match: [Ansible]
+pulumi:
+  name: Pulumi
+cloudformation:
+  name: CloudFormation
+  match: [CloudFormation, AWS CDK]
+
+# ------------------------------------------------------------------------ CI/CD
+jenkins:
+  name: Jenkins
+github-actions:
+  name: GitHub Actions
+  match: [GitHub Actions, Github Actions]
+gitlab-ci:
+  name: GitLab CI
+  match: [GitLab CI, GitLab-CI, Gitlab CI/CD]
+argocd:
+  name: ArgoCD
+  match: [ArgoCD, Argo CD]
+
+# ------------------------------------------------------------------ observabilidad
+prometheus:
+  name: Prometheus
+grafana:
+  name: Grafana
+datadog:
+  name: Datadog
+  match: [Datadog, Data Dog]
+elastic-stack:
+  name: Elastic Stack
+  match: [Elasticsearch, ELK, Logstash, Kibana, OpenSearch]
+new-relic:
+  name: New Relic
+splunk:
+  name: Splunk
+opentelemetry:
+  name: OpenTelemetry
+  match: [OpenTelemetry, OTel]
+
+# ----------------------------------------------------------------- bases de datos
+postgresql:
+  name: PostgreSQL
+  match: [PostgreSQL, Postgres, PostGIS]
+mysql:
+  name: MySQL
+  match: [MySQL, MariaDB]
+sql-server:
+  name: SQL Server
+  match: [SQL Server, SQLServer, T-SQL, Transact-SQL]
+oracle-db:
+  name: Oracle DB
+  match: [Oracle Database, PL/SQL, Oracle DB]
+mongodb:
+  name: MongoDB
+  match: [MongoDB, Mongo]
+redis:
+  name: Redis
+cassandra:
+  name: Cassandra
+dynamodb:
+  name: DynamoDB
+clickhouse:
+  name: ClickHouse
+snowflake:
+  name: Snowflake
+bigquery:
+  name: BigQuery
+  match: [BigQuery, Big Query]
+redshift:
+  name: Redshift
+databricks:
+  name: Databricks
+
+# ------------------------------------------------------------------ data / ETL
+airflow:
+  name: Airflow
+  match: [Airflow, Apache Airflow, MWAA]
+dbt:
+  name: dbt
+  match: [dbt, data build tool]
+spark:
+  name: Spark
+  match: [Spark, PySpark, Apache Spark]
+kafka:
+  name: Kafka
+  match: [Kafka, Apache Kafka, Confluent]
+rabbitmq:
+  name: RabbitMQ
+  match: [RabbitMQ, AMQP]
+power-bi:
+  name: Power BI
+  match: [Power BI, PowerBI]
+tableau:
+  name: Tableau
+looker:
+  name: Looker
+  match: [Looker, LookML]
+
+# ----------------------------------------------------------------------- cloud
+aws:
+  name: AWS
+  match: [AWS, Amazon Web Services]
+azure:
+  name: Azure
+  match: [Azure, Microsoft Azure]
+gcp:
+  name: GCP
+  match: [GCP, Google Cloud, Google Cloud Platform]
+serverless:
+  name: Serverless
+  match: [Serverless, Lambda, AWS Lambda, Cloud Functions, Azure Functions]
+
+# ------------------------------------------------------- industrial / OT / SCADA
+scada:
+  name: SCADA
+  match: [SCADA]
+modbus:
+  name: Modbus
+  match: [Modbus, Modbus TCP, Modbus RTU]
+opc-ua:
+  name: OPC UA
+  match: [OPC UA, OPC-UA, OPC]
+plc:
+  name: PLC
+  match: [PLC, PLCs, Autómata programable, TIA Portal, Step 7, Codesys]
+mqtt:
+  name: MQTT
+historian:
+  name: Historian
+  match: [PI System, OSIsoft, AVEVA Historian, Historian]
+iot:
+  name: IoT
+  match: [IoT, Internet of Things, Internet de las cosas, IIoT]
+
+# ------------------------------------------------------------------ lenguajes
+python:
+  name: Python
+  match: [Python, Python3]
+java:
+  name: Java
+  match: [Java, Java 8, Java 11, Java 17, Java 21]
+javascript:
+  name: JavaScript
+  match: [JavaScript, Javascript, JS, ECMAScript]
+typescript:
+  name: TypeScript
+  match: [TypeScript, Typescript]
+csharp:
+  name: "C#"
+  match: ["C#", "C sharp"]
+cpp:
+  name: "C++"
+  match: ["C++", "CPP"]
+rust:
+  name: Rust
+  match: [Rust]
+kotlin:
+  name: Kotlin
+swift:
+  name: Swift
+php:
+  name: PHP
+ruby:
+  name: Ruby
+  match: [Ruby, Ruby on Rails, RoR]
+scala:
+  name: Scala
+
+# ------------------------------------------------------------------ frameworks
+django:
+  name: Django
+flask:
+  name: Flask
+fastapi:
+  name: FastAPI
+  match: [FastAPI, Fast API]
+spring:
+  name: Spring
+  match: [Spring, Spring Boot, Spring Framework]
+react:
+  name: React
+  match: [React, ReactJS, React.js]
+angular:
+  name: Angular
+  match: [Angular, AngularJS]
+vue:
+  name: Vue
+  match: [Vue, Vue.js, VueJS, Nuxt]
+nextjs:
+  name: Next.js
+  match: [Next.js, NextJS, Next js]
+nodejs:
+  name: Node.js
+  match: [Node.js, NodeJS, Node js]
+dotnet:
+  name: .NET
+  match: [".NET", "dotnet", ".Net Core", "ASP.NET"]
+laravel:
+  name: Laravel
+flutter:
+  name: Flutter
+react-native:
+  name: React Native
+  match: [React Native, React-Native]
+
+# ------------------------------------------------------------------------- IA
+llm:
+  name: LLMs
+  match: [LLM, LLMs, Large Language Model, Modelos de lenguaje]
+openai:
+  name: OpenAI
+  match: [OpenAI, GPT-4, ChatGPT]
+langchain:
+  name: LangChain
+  match: [LangChain, LlamaIndex]
+pytorch:
+  name: PyTorch
+tensorflow:
+  name: TensorFlow
+  match: [TensorFlow, Keras]
+scikit-learn:
+  name: scikit-learn
+  match: [scikit-learn, sklearn, scikit learn]
+rag:
+  name: RAG
+  match: [RAG, Retrieval Augmented Generation, Retrieval-Augmented Generation]
+mlops:
+  name: MLOps
+  match: [MLOps, MLflow, Kubeflow, SageMaker, Vertex AI]
+
+# --------------------------------------------------------------- seguridad / QA
+owasp:
+  name: OWASP
+  match: [OWASP, OWASP Top 10]
+pentesting:
+  name: Pentesting
+  match: [Pentesting, Penetration Testing, Ethical Hacking, Hacking ético]
+siem:
+  name: SIEM
+  match: [SIEM, SOC, Sentinel, QRadar]
+iso-27001:
+  name: ISO 27001
+  match: [ISO 27001, ISO27001, ISO/IEC 27001]
+selenium:
+  name: Selenium
+cypress:
+  name: Cypress
+playwright:
+  name: Playwright
+
+# ----------------------------------------------------------------- herramientas
+git:
+  name: Git
+  match: [Git, GitHub, GitLab, Bitbucket]
+jira:
+  name: Jira
+  match: [Jira, Atlassian]
+figma:
+  name: Figma
+sap:
+  name: SAP
+  match: [SAP, SAP HANA, SAP S/4HANA, ABAP]
+salesforce:
+  name: Salesforce
+  match: [Salesforce, Apex, SFDC]
