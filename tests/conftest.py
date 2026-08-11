@@ -13,23 +13,50 @@ from gob.analytics import Job, Snapshot, TagRef
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
+LOCALES = {"127.0.0.1", "::1", "localhost", "0.0.0.0", "", None}
+
+
 @pytest.fixture(autouse=True)
 def sin_red(monkeypatch):
-    """Ningún test puede llamar a la API.
+    """Ningún test puede salir a internet.
 
-    Si alguno lo intenta, falla en el acto con un mensaje claro en vez de tardar
-    30 s y depender de que haya internet. `httpx.MockTransport` no abre sockets,
-    así que los tests del cliente siguen funcionando.
+    Se bloquea la *salida* (resolución de nombres y connect a un host externo),
+    no cualquier socket: en Windows el bucle de asyncio abre un socket local
+    para su self-pipe, y prohibirlo dejaría fuera a TestClient sin que eso
+    signifique que nadie llamó a la API.
+
+    Con esto, un test que intente pegarle a getonbrd.com falla en el acto con un
+    mensaje claro, en vez de tardar 30 s y depender de que haya internet.
+    `httpx.MockTransport` no llega a abrir conexión, así que los tests del
+    cliente siguen funcionando.
     """
+    connect_real = socket.socket.connect
+    getaddrinfo_real = socket.getaddrinfo
 
-    def prohibido(*args, **kwargs):
+    def revienta(destino):
         raise AssertionError(
-            "Un test intentó abrir un socket. Los tests van con fixtures fijas, "
-            "sin llamadas reales a la API."
+            f"Un test intentó conectarse a {destino!r}. Los tests van con fixtures "
+            "fijas, sin llamadas reales a la API."
         )
 
-    monkeypatch.setattr(socket, "socket", prohibido)
-    monkeypatch.setattr(socket, "create_connection", prohibido)
+    def anfitrion(direccion):
+        return direccion[0] if isinstance(direccion, tuple) else direccion
+
+    def connect_vigilado(self, direccion, *args, **kwargs):
+        if anfitrion(direccion) not in LOCALES:
+            revienta(anfitrion(direccion))
+        return connect_real(self, direccion, *args, **kwargs)
+
+    def getaddrinfo_vigilado(host, *args, **kwargs):
+        if host not in LOCALES:
+            revienta(host)
+        return getaddrinfo_real(host, *args, **kwargs)
+
+    monkeypatch.setattr(socket.socket, "connect", connect_vigilado)
+    monkeypatch.setattr(socket, "getaddrinfo", getaddrinfo_vigilado)
+    monkeypatch.setattr(
+        socket, "create_connection", lambda direccion, *a, **k: revienta(anfitrion(direccion))
+    )
 
 
 @pytest.fixture(scope="session")
