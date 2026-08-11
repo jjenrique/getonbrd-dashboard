@@ -195,7 +195,7 @@ Fuente: `GET /categories/{slug}/jobs` con `expand[]`. Ejemplo completo en
 | `remote` | bool | Redundante con `remote_modality`, pero no equivalente: en 120 ofertas hubo 48 `true` frente a 17 `fully_remote` + 31 `remote_local` |
 | `remote_modality` | enum | `no_remote` · `temporarily_remote` · `remote_local` · `fully_remote` · `hybrid` |
 | `remote_zone` | null | Siempre `null` en las 120 ofertas observadas |
-| `countries` | string[] | **Array de nombres**, no de slugs. Puede valer `["Remote"]` — "Remote" viene como si fuera un país |
+| `countries` | string[] | **Array de nombres**, no de slugs. Incluye un pseudo-país para las ofertas remotas, **y está localizado**: `["Remote"]` con `lang=en`, `["Remoto"]` con `lang=es`. En la ingesta completa (`lang=es`) salen 472 "Chile" y 450 "Remoto" |
 | `lang` | string | `es` · `en` · `lang_not_specified` (57% de los casos) |
 | `category_name` | string | Localizado por `lang` ("Programación" / "Programming"). El **slug** de categoría no viene en el job: lo aporta la ingesta, que sabe qué categoría está recorriendo |
 | `perks` | string[] | Slugs (`flexible_hours`, `computer_provided`, …) |

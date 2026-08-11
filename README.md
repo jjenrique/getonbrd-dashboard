@@ -19,9 +19,12 @@ mercado tech LATAM/Chile:
 | Fase | Qué incluye | Estado |
 |---|---|---|
 | 1 | Exploración de la API + `docs/API.md` + muestras reales | ✅ Hecha |
-| 2 | Ingesta (`gob.ingest`) y BD SQLite poblada | ⏳ Pendiente |
+| 2 | Ingesta (`gob.ingest`) y BD SQLite poblada | ✅ Hecha |
 | 3 | `gob.analytics` + tests | ⏳ Pendiente |
 | 4 | Dashboard FastAPI + Chart.js | ⏳ Pendiente |
+
+Una corrida completa hoy: **1.022 ofertas** de 18 categorías, 224 empresas y 10.601
+asignaciones de tag (8.394 oficiales + 2.207 sacadas del texto), en **~45 s** y 23 peticiones.
 
 ## Instalación
 
@@ -35,9 +38,9 @@ Requiere Python 3.11+ (probado con 3.13.1).
 
 ## Uso
 
-*(disponible a partir de la Fase 2)*
-
 ```bash
+pip install -e .        # deja `python -m gob.ingest` disponible
+
 # Ingesta completa: recorre las 18 categorías y puebla data/gob.db
 python -m gob.ingest --full
 
@@ -47,9 +50,31 @@ python -m gob.ingest --categories programacion,sysadmin-devops-qa
 # Reprocesar sin volver a llamar a la API (usa el JSON crudo de data/raw/)
 python -m gob.ingest --from-cache
 
+# Reaplicar data/tag_aliases.yml después de editarlo, sin reingestar
+python -m gob.ingest --refresh-aliases
+
 # Levantar el dashboard  (Fase 4)
 uvicorn gob.web:app --reload
 ```
+
+Opciones útiles: `--db RUTA`, `--sandbox`, `--per-page N` (máx. 120), `--rate N` (peticiones
+por segundo, 2 por defecto), `--lang es|en|pt`, `-v`.
+
+**Cada corrida es idempotente**: el upsert va por `id` de oferta y conserva `first_seen_at`.
+Correrla dos veces deja exactamente las mismas filas, solo avanza `last_seen_at` y añade un
+snapshot.
+
+**Cada página se guarda en disco antes de tocar la BD** (`data/raw/<corrida>/<categoria>_pN.json`),
+así que si la ingesta muere a mitad no se pierde lo descargado y `--from-cache` lo reconstruye.
+Cada corrida ocupa ~9 MB; las carpetas viejas de `data/raw/` se pueden borrar a mano cuando estorben.
+
+## Los ficheros que puedes editar a mano
+
+| Archivo | Para qué |
+|---|---|
+| [`data/tag_aliases.yml`](data/tag_aliases.yml) | Agrupar duplicados semánticos (`angularjs` → `angular`, `net` → `dotnet`). Tras editarlo: `--refresh-aliases` |
+| [`data/tech_keywords.yml`](data/tech_keywords.yml) | Tecnologías a buscar en el texto de la oferta, para lo que los tags oficiales no cubren (SCADA, Modbus, Airflow…). Tras editarlo hay que reprocesar: `--from-cache` |
+| [`data/mi_stack.yml`](data/mi_stack.yml) | Tu stack actual, para el panel de brechas. **Viene con un ejemplo: cámbialo** |
 
 ## La API
 
