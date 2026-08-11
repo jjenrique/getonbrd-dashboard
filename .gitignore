@@ -1,0 +1,23 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Datos generados por la ingesta (no se versionan: se regeneran con `python -m gob.ingest --full`)
+data/raw/
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Editor / SO
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
