@@ -20,7 +20,7 @@ mercado tech LATAM/Chile:
 |---|---|---|
 | 1 | Exploración de la API + `docs/API.md` + muestras reales | ✅ Hecha |
 | 2 | Ingesta (`gob.ingest`) y BD SQLite poblada | ✅ Hecha |
-| 3 | `gob.analytics` + tests | ⏳ Pendiente |
+| 3 | `gob.analytics` + tests | ✅ Hecha |
 | 4 | Dashboard FastAPI + Chart.js | ⏳ Pendiente |
 
 Una corrida completa hoy: **1.022 ofertas** de 18 categorías, 224 empresas y 10.601
@@ -53,9 +53,22 @@ python -m gob.ingest --from-cache
 # Reaplicar data/tag_aliases.yml después de editarlo, sin reingestar
 python -m gob.ingest --refresh-aliases
 
+# Ver el análisis por consola, sin dashboard
+python scripts/reporte.py --tag python --categoria programacion
+
 # Levantar el dashboard  (Fase 4)
 uvicorn gob.web:app --reload
 ```
+
+## Tests
+
+```bash
+pytest -q          # 156 tests, ~1,5 s
+```
+
+Con fixtures fijas y **sin red**: `tests/conftest.py` corta los sockets, así que
+cualquier test que intente llamar a la API falla en el acto en vez de depender de
+internet. Los del cliente HTTP usan `httpx.MockTransport`.
 
 Opciones útiles: `--db RUTA`, `--sandbox`, `--per-page N` (máx. 120), `--rate N` (peticiones
 por segundo, 2 por defecto), `--lang es|en|pt`, `-v`.
