@@ -63,14 +63,17 @@ class _RateLimiter:
 
     def __init__(self, rate_per_second: float):
         self._min_interval = 1.0 / rate_per_second if rate_per_second > 0 else 0.0
-        self._last_call = 0.0
+        # None y no 0.0: en plataformas donde monotonic() arranca cerca de cero,
+        # un 0.0 haría que la PRIMERA petición del proceso esperase sin motivo.
+        self._last_call: float | None = None
 
     def wait(self) -> None:
         if not self._min_interval:
             return
-        elapsed = time.monotonic() - self._last_call
-        if elapsed < self._min_interval:
-            time.sleep(self._min_interval - elapsed)
+        if self._last_call is not None:
+            elapsed = time.monotonic() - self._last_call
+            if elapsed < self._min_interval:
+                time.sleep(self._min_interval - elapsed)
         self._last_call = time.monotonic()
 
 
