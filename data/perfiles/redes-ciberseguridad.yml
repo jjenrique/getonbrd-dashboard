@@ -1,0 +1,73 @@
+# Perfil de búsqueda: redes y ciberseguridad — EDITABLE A MANO
+# Qué significa cada campo: ver el encabezado de ti-infra.yml.
+
+nombre: Redes y ciberseguridad
+descripcion: Redes, telecomunicaciones y seguridad IT/OT.
+
+categorias:
+  - cybersecurity
+
+# Get on Board no tiene categoría de redes: los puestos de redes y telecom
+# aparecen en sysadmin, soporte, hardware, operaciones e incluso docencia.
+tambien_si_pide:
+  - networking
+  - network-configuration
+  - network-support
+  - network-troubleshooting
+  - network-administration
+  - network-security
+  - firewall
+  - routing
+  - vpn
+  - sd-wan
+  - cisco
+  - fortinet
+  - fiber-optics
+  - scada
+  - plc
+  - modbus
+  - industrial-automation
+  - industrial-iot
+  - it-ot-integration
+
+fuerte:
+  - Redes
+  - Routing
+  - Firewall
+  - VPN
+  - OpenVPN
+  - DNS
+  - NAT
+  - SSL
+  - TLS
+  - 4G
+  - LTE
+  - WiFi
+  - SCADA
+  - PLC
+  - IoT
+  # Variantes: así nombra Get on Board cosas que ya haces. Bórralas si no aplican.
+  - Network Configuration
+  - Network Troubleshooting
+  - Network Support
+  # Candidatas que piden estas ofertas. Descomenta solo si las defiendes hoy:
+  # - Network Security
+  # - Cisco
+  # - Fortinet
+  # - ISO 27001
+  # - SIEM
+
+condiciones:
+  remoto:
+    acepto: [fully_remote, remote_local, hybrid]
+    obligatorio: true
+  sueldo_minimo:
+    # Punto de partida, AJÚSTALO: en nov-2026 el p25 de cybersecurity es ~2.500.
+    usd: 1800
+    obligatorio: false
+  paises:
+    acepto: [Chile, Remoto]
+    obligatorio: false
+  jornada:
+    acepto: [full_time, freelance]
+    obligatorio: false

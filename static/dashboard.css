@@ -339,6 +339,87 @@ tbody tr:hover { background: var(--plano); }
 
 .vacio { color: var(--tinta-2); font-size: 0.875rem; padding: 24px 0; text-align: center; }
 
+/* -------------------------------------------------------- ofertas para ti */
+
+.perfiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Botones, pero con cara de tarjeta: el estilo global de <button> es el azul
+   de acción, que aquí gritaría. */
+button.perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  background: var(--plano);
+  color: var(--tinta);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+button.perfil:hover { filter: none; border-color: var(--eje); }
+button.perfil[aria-pressed="true"] {
+  border-color: var(--serie-1);
+  box-shadow: inset 0 0 0 1px var(--serie-1);
+  background: var(--superficie);
+}
+
+.perfil__nombre { font-weight: 600; font-size: 0.9rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.perfil__valor { font-size: 1.9rem; line-height: 1.1; letter-spacing: -0.02em; margin-top: 4px; }
+.perfil__etiqueta { font-size: 0.78rem; color: var(--tinta-2); }
+.perfil__nota { font-size: 0.72rem; color: var(--tinta-apagada); margin-top: 2px; }
+.perfil__insignia {
+  font-size: 0.66rem;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--bien);
+  color: var(--tinta-2);
+}
+
+.detalle-perfil { margin-bottom: 8px; }
+.detalle-perfil p { margin: 0 0 4px; }
+
+.apagado { color: var(--tinta-apagada); font-size: 0.78rem; }
+.puntaje { display: block; font-size: 1rem; font-variant-numeric: tabular-nums; }
+#tabla-calce .barra-mini { margin-left: auto; max-width: 64px; }
+/* Siete columnas no caben en un teléfono: mejor desplazar que aplastar el título. */
+#tabla-calce table { min-width: 980px; }
+#tabla-calce td:first-child { width: 72px; }
+#tabla-calce td:last-child { white-space: nowrap; }
+
+.marca-fuera {
+  font-size: 0.66rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--eje);
+  color: var(--tinta-2);
+  white-space: nowrap;
+}
+
+.chequeos { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* El estado lo dicen el símbolo y el texto; el color del borde solo refuerza.
+   El texto queda en tinta-2 porque el naranja de "serio" no llega a 3:1. */
+.chequeo {
+  font-size: 0.7rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--eje);
+  color: var(--tinta-2);
+  white-space: nowrap;
+}
+.chequeo--si { border-color: var(--bien); }
+.chequeo--no { border-color: var(--serio); }
+.chequeo--nd { border-style: dashed; color: var(--tinta-apagada); }
+
+.explicacion p { margin: 0 0 8px; max-width: 90ch; }
+
 /* ------------------------------------------------------------------- pie */
 
 .pie {

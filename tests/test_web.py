@@ -38,8 +38,25 @@ def cliente(tmp_path, api_jobs_fixture, monkeypatch):
     stack = tmp_path / "mi_stack.yml"
     stack.write_text("- React\n- TypeScript\n", encoding="utf-8")
     monkeypatch.setattr(web.config, "MI_STACK_PATH", stack)
+
+    perfiles = tmp_path / "perfiles"
+    perfiles.mkdir()
+    (perfiles / "front.yml").write_text(PERFIL_FRONT, encoding="utf-8")
+    monkeypatch.setattr(web.config, "PERFILES_DIR", perfiles)
+
     monkeypatch.setattr(web, "store", web.Store(db))
     return TestClient(web.app)
+
+
+PERFIL_FRONT = """
+nombre: Front
+descripcion: Prueba.
+categorias: [programacion]
+fuerte: [React]
+condiciones:
+  sueldo_minimo:
+    usd: 1000
+"""
 
 
 RUTAS = [
@@ -51,6 +68,8 @@ RUTAS = [
     "/api/empresas",
     "/api/brechas",
     "/api/jobs",
+    "/api/perfiles",
+    "/api/calce?perfil=front",
     "/health",
 ]
 
@@ -141,6 +160,58 @@ def test_jobs_pagina_y_ordena_por_fecha(cliente):
     fechas = [j["published_at"] for j in d["items"]]
     assert fechas == sorted(fechas, reverse=True)
     assert all(j["url"] for j in d["items"])
+
+
+def test_perfiles_compara_y_usa_el_stack(cliente):
+    d = cliente.get("/api/perfiles").json()
+    assert d["errores"] == [] and d["activas"] == 3
+    (r,) = d["perfiles"]
+    assert r["perfil"]["slug"] == "front" and r["perfil"]["fuerte"] == ["react"]
+    assert r["candidatas"] == 3 and r["evaluadas"] == 3 and r["descartadas"] == 0
+
+
+def test_calce_ordena_y_explica(cliente):
+    d = cliente.get("/api/calce?perfil=front").json()
+    assert d["total"] == 3 and d["perfil"]["nombre"] == "Front"
+    puntajes = [c["puntaje"] for c in d["items"]]
+    assert puntajes == sorted(puntajes, reverse=True)
+    con_react = [c for c in d["items"] if "react" in c["tiene"]]
+    assert con_react and all(c["fuertes"] == ["react"] for c in con_react)
+    # la condición de sueldo viaja con su resultado, también cuando no hay dato
+    assert {ch["clave"] for c in d["items"] for ch in c["chequeos"]} == {"sueldo_minimo"}
+
+
+def test_calce_pagina(cliente):
+    d = cliente.get("/api/calce?perfil=front&limit=2&offset=2").json()
+    assert d["total"] == 3 and len(d["items"]) == 1 and d["offset"] == 2
+
+
+def test_calce_de_un_perfil_que_no_existe_es_404(cliente):
+    assert cliente.get("/api/calce?perfil=nope").status_code == 404
+
+
+def test_un_perfil_roto_se_avisa_sin_romper_nada(cliente):
+    (web.config.PERFILES_DIR / "roto.yml").write_text("nombre: Roto\n", encoding="utf-8")
+    d = cliente.get("/api/perfiles").json()
+    assert [r["perfil"]["slug"] for r in d["perfiles"]] == ["front"]
+    assert len(d["errores"]) == 1 and d["errores"][0].startswith("roto.yml")
+
+
+def test_calce_solo_mira_las_ofertas_activas(cliente, tmp_path, api_jobs_fixture):
+    """Una segunda corrida que solo ve una oferta deja a las otras dos como vencidas:
+    siguen contando para tendencias, pero no para decidir a qué postular."""
+    conn = connect(tmp_path / "web.db")
+    with conn:
+        conn.execute("INSERT INTO snapshots (id, run_at) VALUES (2, '2026-08-02T00:00:00+00:00')")
+        store_job(
+            conn, parse_job(api_jobs_fixture[0], "programacion"),
+            snapshot_id=2, now="2026-08-02T00:00:00+00:00", aliases=ALIASES, keywords=[],
+        )
+    conn.close()
+
+    assert cliente.get("/api/perfiles").json()["activas"] == 1
+    assert cliente.get("/api/calce?perfil=front").json()["total"] == 1
+    assert cliente.get("/api/resumen").json()["ofertas"] == 3     # el resto del dashboard no cambia
 
 
 def test_health(cliente):

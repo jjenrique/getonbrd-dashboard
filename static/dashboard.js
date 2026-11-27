@@ -589,6 +589,162 @@ async function pintarOfertas(acumular = false) {
   boton.textContent = boton.disabled ? "No hay más" : `Ver ${Math.min(PASO_OFERTAS, d.total - filasOfertas.length)} más`;
 }
 
+/* ------------------------------------------------------- ofertas para ti */
+
+/* Lo que viene de las ofertas (títulos, empresas) entra como texto, nunca como
+   HTML: es contenido de terceros. */
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+const REMOTO_ES = {
+  fully_remote: "100% remoto",
+  remote_local: "remoto local",
+  hybrid: "híbrido",
+  temporarily_remote: "remoto temporal",
+  no_remote: "presencial",
+};
+const JORNADA_ES = { full_time: "full time", part_time: "part time", freelance: "freelance", internship: "práctica" };
+const CONDICION_ES = { remoto: "modalidad", sueldo_minimo: "sueldo", paises: "país", jornada: "jornada" };
+
+const capital = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const unirO = (xs) => (xs.length <= 1 ? xs.join("") : `${xs.slice(0, -1).join(", ")} o ${xs[xs.length - 1]}`);
+
+function describirCondicion(c) {
+  if (c.clave === "sueldo_minimo") return `sueldo ≥ ${num(c.minimo)} ${MONEDA}`;
+  if (c.clave === "remoto") return unirO(c.acepto.map((v) => REMOTO_ES[v] || v));
+  if (c.clave === "jornada") return unirO(c.acepto.map((v) => JORNADA_ES[v] || v));
+  return `país: ${unirO(c.acepto.map(capital))}`;
+}
+
+function textoChequeo(ch) {
+  if (ch.cumple === null) return ch.clave === "sueldo_minimo" ? "sueldo no publicado" : `${CONDICION_ES[ch.clave]} sin dato`;
+  if (ch.clave === "remoto") return REMOTO_ES[ch.detalle] || ch.detalle;
+  if (ch.clave === "jornada") return JORNADA_ES[ch.detalle] || ch.detalle;
+  if (ch.clave === "sueldo_minimo") return ch.detalle.split("–").map((n) => num(Number(n))).join("–");
+  return ch.detalle;
+}
+
+function chequeo(ch) {
+  const estado = ch.cumple === null ? "nd" : ch.cumple ? "si" : "no";
+  const simbolo = { si: "✓", no: "✗", nd: "?" }[estado];
+  const tipo = ch.obligatorio ? "obligatorio" : "deseable";
+  return `<span class="chequeo chequeo--${estado}" title="${CONDICION_ES[ch.clave]} (${tipo})">${simbolo} ${esc(textoChequeo(ch))}</span>`;
+}
+
+let perfilElegido = null;
+let offsetCalce = 0;
+const PASO_CALCE = 25;
+let filasCalce = [];
+
+async function pintarPerfiles() {
+  const d = await traer("/api/perfiles");
+  const avisos = d.errores.map(
+    (e) => `<div class="aviso"><strong>Perfil con errores, no se cargó:</strong> ${esc(e)}</div>`
+  );
+  if (!d.perfiles.length) {
+    avisos.push(`<p class="vacio">No hay perfiles. Crea uno en <code>data/perfiles/</code>
+      copiando cualquiera de los de ejemplo, y recarga.</p>`);
+  }
+  $("#avisos-perfiles").innerHTML = avisos.join("");
+  if (!d.perfiles.length) return;
+
+  let guardado = null;
+  try { guardado = localStorage.getItem("gob-perfil"); } catch (_) { /* sin storage: da igual */ }
+  const slugs = d.perfiles.map((r) => r.perfil.slug);
+  perfilElegido = slugs.includes(guardado) ? guardado : slugs[0];
+
+  const contenedor = $("#perfiles");
+  contenedor.innerHTML = d.perfiles
+    .map((r, i) => {
+      const sueldo = r.mediana_salario_buen_calce
+        ? `mediana ${num(r.mediana_salario_buen_calce)} ${d.moneda} <span class="apagado">(n=${r.n_salario_buen_calce})</span>`
+        : `sin sueldos publicados`;
+      const abriria = r.te_abriria.length
+        ? `Lo que más te falta: ${r.te_abriria.slice(0, 3).map((t) => esc(t.slug)).join(", ")}`
+        : "";
+      const insignia = i === 0 && r.buen_calce > 0 ? '<span class="perfil__insignia">más oportunidad</span>' : "";
+      return `<button type="button" class="perfil" data-slug="${esc(r.perfil.slug)}" aria-pressed="false">
+        <span class="perfil__nombre">${esc(r.perfil.nombre)} ${insignia}</span>
+        <span class="perfil__valor">${num(r.buen_calce)}</span>
+        <span class="perfil__etiqueta">con buen calce, de ${num(r.evaluadas)} que cumplen lo obligatorio</span>
+        <span class="perfil__nota">Mejor puntaje: ${r.mejor_puntaje ?? "—"} · Sueldo del buen calce: ${sueldo}</span>
+        ${abriria ? `<span class="perfil__nota">${abriria}</span>` : ""}
+      </button>`;
+    })
+    .join("");
+
+  contenedor.querySelectorAll(".perfil").forEach((b) =>
+    b.addEventListener("click", () => {
+      perfilElegido = b.dataset.slug;
+      try { localStorage.setItem("gob-perfil", perfilElegido); } catch (_) { /* idem */ }
+      offsetCalce = 0;
+      marcarPerfil();
+      pintarCalce();
+    })
+  );
+  marcarPerfil();
+  await pintarCalce();
+}
+
+function marcarPerfil() {
+  document.querySelectorAll(".perfil").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.slug === perfilElegido)));
+}
+
+const COLUMNAS_CALCE = [
+  {
+    titulo: "Puntaje",
+    num: true,
+    valor: (c) => `<span class="puntaje">${c.puntaje}</span><span class="barra-mini" style="width:${c.puntaje}%"></span>`,
+  },
+  {
+    titulo: "Oferta",
+    valor: (c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a>
+      <div class="apagado">${[c.empresa, c.seniority, c.categoria].filter(Boolean).map(esc).join(" · ")}
+      ${c.por_categoria ? "" : ' <span class="marca-fuera" title="Es de otra categoría, pero pide algo de tambien_si_pide">otra categoría</span>'}</div>`,
+  },
+  { titulo: "Calce técnico", num: true, valor: (c) => pct(c.tecnico) },
+  {
+    titulo: "Tienes",
+    valor: (c) =>
+      `<span class="tags-oferta">${c.tiene
+        .slice(0, 7)
+        .map((s) => (c.fuertes.includes(s) ? `<strong>${esc(s)}</strong>` : esc(s)))
+        .join(", ")}</span>`,
+  },
+  { titulo: "Te falta", valor: (c) => `<span class="tags-oferta">${c.falta.slice(0, 5).map(esc).join(", ") || "—"}</span>` },
+  { titulo: "Condiciones", valor: (c) => `<span class="chequeos">${c.chequeos.map(chequeo).join("")}</span>` },
+  { titulo: "Publicada", valor: (c) => (c.published_at ? new Date(c.published_at * 1000).toISOString().slice(0, 10) : "—") },
+];
+
+async function pintarCalce(acumular = false) {
+  if (!perfilElegido) return;
+  const d = await traer("/api/calce", `perfil=${encodeURIComponent(perfilElegido)}&limit=${PASO_CALCE}&offset=${offsetCalce}`);
+  filasCalce = acumular ? filasCalce.concat(d.items) : d.items;
+
+  const obligatorias = d.perfil.condiciones.filter((c) => c.obligatorio).map(describirCondicion);
+  const deseables = d.perfil.condiciones.filter((c) => !c.obligatorio).map(describirCondicion);
+  const por = d.descartadas_por.map((x) => `${num(x.n)} por ${CONDICION_ES[x.clave]}`).join(", ");
+  $("#detalle-perfil").innerHTML = `<div class="detalle-perfil">
+      <p><strong>${esc(d.perfil.nombre)}</strong> — ${esc(d.perfil.descripcion)}</p>
+      <p class="sub">
+        ${obligatorias.length ? `<strong>Obligatorio:</strong> ${esc(obligatorias.join(" · "))}. ` : ""}
+        ${deseables.length ? `<strong>Suma puntos:</strong> ${esc(deseables.join(" · "))}.` : ""}
+      </p>
+      <p class="sub">
+        ${num(d.candidatas)} ofertas activas son de este perfil;
+        ${d.descartadas ? `${num(d.descartadas)} quedan fuera por lo obligatorio (${por}); ` : ""}
+        quedan <strong>${num(d.total)}</strong>, ${num(d.buen_calce)} con buen calce.
+        En negrita, lo fuerte del perfil.
+      </p>
+    </div>`;
+
+  tabla($("#tabla-calce"), COLUMNAS_CALCE, filasCalce);
+  const boton = $("#mas-calce");
+  boton.hidden = d.total <= PASO_CALCE;
+  boton.disabled = filasCalce.length >= d.total;
+  boton.textContent = boton.disabled ? "No hay más" : `Ver ${Math.min(PASO_CALCE, d.total - filasCalce.length)} más`;
+}
+
 /* ------------------------------------------------------------------- tema */
 
 function montarTema() {
@@ -631,6 +787,7 @@ async function iniciar() {
   montarSelectorCoocurrencia(top);
 
   await Promise.all([
+    pintarPerfiles(),
     pintarSeniority(),
     pintarTendencia(),
     pintarSalarios(),
@@ -642,6 +799,10 @@ async function iniciar() {
   $("#mas-ofertas").addEventListener("click", () => {
     offsetOfertas += PASO_OFERTAS;
     pintarOfertas(true);
+  });
+  $("#mas-calce").addEventListener("click", () => {
+    offsetCalce += PASO_CALCE;
+    pintarCalce(true);
   });
 }
 

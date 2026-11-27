@@ -14,6 +14,7 @@ DB_PATH = DATA_DIR / "gob.db"
 TAG_ALIASES_PATH = DATA_DIR / "tag_aliases.yml"
 TECH_KEYWORDS_PATH = DATA_DIR / "tech_keywords.yml"
 MI_STACK_PATH = DATA_DIR / "mi_stack.yml"
+PERFILES_DIR = DATA_DIR / "perfiles"
 
 TEMPLATES_DIR = ROOT / "templates"
 STATIC_DIR = ROOT / "static"

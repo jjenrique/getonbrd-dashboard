@@ -102,6 +102,38 @@
 
 <main class="rejilla">
 
+  <section class="tarjeta tarjeta--ancha" id="seccion-calce">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Ofertas para ti</h2>
+        <p class="sub">
+          Cruza las ofertas <strong>activas</strong> con cada perfil de <code>data/perfiles/</code>:
+          dónde buscar, tu stack y lo que quieres de la oferta. Arriba, en qué perfil hay más
+          oportunidad hoy; abajo, las mejores del perfil elegido.
+        </p>
+      </div>
+    </header>
+    <div id="avisos-perfiles"></div>
+    <div class="perfiles" id="perfiles" role="group" aria-label="Perfiles de búsqueda"></div>
+    <div id="detalle-perfil"></div>
+    <div id="tabla-calce"></div>
+    <div class="paginador"><button id="mas-calce" type="button" hidden>Ver más</button></div>
+    <details class="tabla-alterna">
+      <summary>Cómo se calcula el puntaje</summary>
+      <div class="sub explicacion">
+        <p><strong>Calce técnico</strong>: qué parte de lo que pide la oferta ya cubres con
+          <code>mi_stack.yml</code> más lo <em>fuerte</em> del perfil. Lo fuerte pesa doble y lo
+          deducido del texto, la mitad. Una oferta con menos de 5 tags cuenta como si tuviera 5,
+          porque pocos tags es poca evidencia.</p>
+        <p><strong>Puntaje</strong>: 80% calce técnico y 20% condiciones deseables (cumple, no
+          cumple o no lo publica, que vale la mitad). Las condiciones <em>obligatorias</em> no
+          suman: descartan, salvo que la oferta no publique el dato.</p>
+        <p><strong>Buen calce</strong>: cubres al menos la mitad de lo que piden. Casi ninguna
+          oferta se cubre entera: la lista de tags es una carta a los Reyes, no un requisito.</p>
+      </div>
+    </details>
+  </section>
+
   <section class="tarjeta tarjeta--ancha">
     <header class="tarjeta__cabecera">
       <div>
