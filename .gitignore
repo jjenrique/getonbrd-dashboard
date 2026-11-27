@@ -21,3 +21,6 @@ data/*.db-shm
 .idea/
 Thumbs.db
 .DS_Store
+
+# Exportación estática (scripts/exportar_estatico.py): se regenera, no se versiona
+dist/

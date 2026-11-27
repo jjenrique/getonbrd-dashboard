@@ -66,7 +66,19 @@ python -m gob.ingest --refresh-aliases
 
 # Ver el análisis por consola, sin dashboard
 python scripts/reporte.py --tag python --categoria programacion
+
+# Congelar el dashboard en un solo HTML que se abre sin servidor -> dist/dashboard.html
+python scripts/exportar_estatico.py
 ```
+
+### Verlo sin servidor
+
+`scripts/exportar_estatico.py` deja el dashboard en **un solo archivo HTML** (~1,7 MB con 967
+ofertas activas) que se abre en cualquier navegador, también en el teléfono, sin uvicorn. Le pide
+cada ruta a la app real y guarda las respuestas dentro de la página; un `fetch` de reemplazo
+([`static/estatico.js`](static/estatico.js)) contesta desde ahí, así que es el mismo dashboard
+con los mismos números. Se puede abrir tal cual, subir a un hosting estático o publicar como
+página. La barra de filtros no existe en esta versión: todas las cifras van sin filtrar.
 
 Opciones útiles de la ingesta: `--db RUTA`, `--sandbox`, `--per-page N` (máx. 120), `--rate N`
 (peticiones por segundo, 2 por defecto), `--lang es|en|pt`, `-v`.
@@ -168,7 +180,7 @@ el nombre no casa con ningún tag. Lo segundo se arregla con un alias.
 ## Tests
 
 ```bash
-pytest -q          # 236 tests, ~3 s
+pytest -q          # 240 tests, ~3 s
 ```
 
 Con fixtures fijas y **sin salir a internet**: `tests/conftest.py` bloquea la resolución de nombres
@@ -210,10 +222,10 @@ src/gob/
   calce.py      calce oferta ↔ perfil: puntaje, condiciones y comparación (puro)
   perfiles.py   lee y valida data/perfiles/*.yml
   web.py        app FastAPI: solo rutas y render
-templates/ static/   dashboard (Jinja2 + Chart.js por CDN, sin build step)
+templates/ static/   dashboard (Jinja2 + Chart.js por CDN, sin build step); estatico.js para la versión sin servidor
 data/         tag_aliases.yml · tech_keywords.yml · mi_stack.yml · perfiles/  (editables a mano)
 data/raw/     JSON crudo por página y snapshot (no versionado)
 docs/         API.md · api-samples/ · capturas/
-scripts/      fetch_samples.py · reporte.py
+scripts/      fetch_samples.py · reporte.py · exportar_estatico.py
 tests/        fixtures fijas, sin red
 ```

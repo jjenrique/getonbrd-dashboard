@@ -160,22 +160,28 @@ def _jobs(filtros: A.Filtros) -> list[A.Job]:
 # -------------------------------------------------------------------- página
 
 
+def contexto_pagina(query: str = "", valores: dict[str, str] | None = None) -> dict[str, Any]:
+    """Lo que necesita templates/dashboard.html. Aparte de la ruta para que
+    scripts/exportar_estatico.py renderice exactamente la misma página."""
+    return {
+        "estado": store.estado,
+        "opciones": store.opciones,
+        "seniority_es": SENIORITY_ES,
+        "query": query,
+        "valores": valores or {},
+        "n_snapshots": len(store.snapshots),
+        "moneda": config.ASSUMED_CURRENCY,
+        "mi_stack": sorted(store.mi_stack),
+        "estatico": None,
+    }
+
+
 @app.get("/")
 def dashboard(request: Request, filtros: A.Filtros = Filtrados):
-    opciones = store.opciones
     return templates.TemplateResponse(
         request,
         "dashboard.html",
-        {
-            "estado": store.estado,
-            "opciones": opciones,
-            "seniority_es": SENIORITY_ES,
-            "query": str(request.url.query),
-            "valores": dict(request.query_params),
-            "n_snapshots": len(store.snapshots),
-            "moneda": config.ASSUMED_CURRENCY,
-            "mi_stack": sorted(store.mi_stack),
-        },
+        contexto_pagina(str(request.url.query), dict(request.query_params)),
     )
 
 

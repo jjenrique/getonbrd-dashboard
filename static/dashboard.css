@@ -143,6 +143,8 @@ code {
   font-size: 0.9rem;
 }
 
+.aviso--estatico { border-left-color: var(--serie-1); }
+
 /* ---------------------------------------------------------------- filtros */
 
 .filtros {

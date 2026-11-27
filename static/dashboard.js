@@ -33,6 +33,11 @@ const nf = new Intl.NumberFormat("es-CL");
 const num = (n) => (n === null || n === undefined ? "—" : nf.format(Math.round(n)));
 const pct = (n) => (n === null || n === undefined ? "—" : `${Math.round(n)}%`);
 
+/* Lo que viene de las ofertas (títulos, empresas) entra como texto, nunca como
+   HTML: es contenido de terceros. */
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
 async function traer(ruta, extra = "") {
   const sep = Q && extra ? "&" : "";
   const qs = [Q, extra].filter(Boolean).join(sep);
@@ -194,7 +199,7 @@ async function pintarTop() {
   });
 
   tabla($("#tabla-top"), [
-    { titulo: "Tecnología", valor: (d) => d.slug + (d.solo_texto ? ' <span class="marca-texto">solo texto</span>' : "") },
+    { titulo: "Tecnología", valor: (d) => esc(d.slug) + (d.solo_texto ? ' <span class="marca-texto">solo texto</span>' : "") },
     { titulo: "Ofertas", num: true, valor: (d) => num(d.ofertas) },
     { titulo: "Tag oficial", num: true, valor: (d) => num(d.api) },
     { titulo: "Del texto", num: true, valor: (d) => num(d.texto) },
@@ -238,7 +243,7 @@ async function pintarSeniority() {
   tabla(
     $("#tabla-seniority"),
     [
-      { titulo: "Tecnología", valor: (f) => f.slug },
+      { titulo: "Tecnología", valor: (f) => esc(f.slug) },
       ...d.seniorities.map((s, i) => ({ titulo: s.nombre, num: true, valor: (f) => num(f.conteos[i]) })),
       { titulo: "Total", num: true, valor: (f) => num(f.conteos.reduce((a, b) => a + b, 0)) },
     ],
@@ -348,7 +353,7 @@ async function pintarTendencia() {
   tabla(
     $("#tabla-tendencia"),
     [
-      { titulo: "Tecnología", valor: (s) => s.slug },
+      { titulo: "Tecnología", valor: (s) => esc(s.slug) },
       ...etiquetas.map((e, i) => ({ titulo: e, num: true, valor: (s) => num(s.puntos[i]?.ofertas) })),
       { titulo: "Variación", num: true, valor: (s) => (s.variacion === null ? "—" : (s.variacion > 0 ? "+" : "") + s.variacion) },
     ],
@@ -432,7 +437,7 @@ async function pintarCoocurrencia(tag) {
   });
 
   tabla($("#tabla-coocurrencia"), [
-    { titulo: "Tecnología", valor: (c) => c.slug },
+    { titulo: "Tecnología", valor: (c) => esc(c.slug) },
     { titulo: "Juntas", num: true, valor: (c) => num(c.juntas) },
     { titulo: `% de ${tag}`, num: true, valor: (c) => pct(c.pct) },
     { titulo: "Lift", num: true, valor: (c) => c.lift.toFixed(2) },
@@ -441,7 +446,7 @@ async function pintarCoocurrencia(tag) {
 
 function montarSelectorCoocurrencia(top) {
   const sel = $("#selector-coocurrencia");
-  sel.innerHTML = top.slice(0, 30).map((t) => `<option value="${t.slug}">${t.slug}</option>`).join("");
+  sel.innerHTML = top.slice(0, 30).map((t) => `<option value="${esc(t.slug)}">${esc(t.slug)}</option>`).join("");
   sel.addEventListener("change", () => pintarCoocurrencia(sel.value));
   if (top.length) pintarCoocurrencia(top[0].slug);
 }
@@ -490,7 +495,7 @@ async function pintarSalarios() {
   });
 
   tabla($("#tabla-salarios"), [
-    { titulo: "Tecnología", valor: (s) => s.slug },
+    { titulo: "Tecnología", valor: (s) => esc(s.slug) },
     { titulo: "Mediana", num: true, valor: (s) => num(s.mediana) },
     { titulo: "p25", num: true, valor: (s) => num(s.p25) },
     { titulo: "p75", num: true, valor: (s) => num(s.p75) },
@@ -520,7 +525,7 @@ async function pintarBrechas() {
   const cuerpo = d.items
     .map(
       (b) => `<tr>
-        <td>${b.slug}${b.solo_texto ? ' <span class="marca-texto">solo texto</span>' : ""}</td>
+        <td>${esc(b.slug)}${b.solo_texto ? ' <span class="marca-texto">solo texto</span>' : ""}</td>
         <td class="num">${num(b.ofertas)}</td>
         <td style="width:34%"><span class="barra-mini" style="width:${(100 * b.ofertas) / maximo}%"></span></td>
         <td class="num">${pct(b.afinidad)}</td>
@@ -531,7 +536,7 @@ async function pintarBrechas() {
   const cola = d.sin_demanda.length
     ? `<p class="sub" style="margin-top:12px">
          <strong>En tu stack pero sin demanda aquí (${d.sin_demanda.length}):</strong>
-         ${d.sin_demanda.join(", ")}.
+         ${d.sin_demanda.map(esc).join(", ")}.
          O el mercado no lo pide, o el nombre no casa con ningún tag — en ese segundo caso
          se arregla con un alias en <code>data/tag_aliases.yml</code>.
        </p>`
@@ -551,10 +556,10 @@ async function pintarBrechas() {
 async function pintarEmpresas() {
   const d = await traer("/api/empresas", "limit=15");
   tabla($("#tabla-empresas"), [
-    { titulo: "Empresa", valor: (e) => e.name },
+    { titulo: "Empresa", valor: (e) => esc(e.name) },
     { titulo: "Ofertas", num: true, valor: (e) => num(e.ofertas) },
     { titulo: "Con sueldo", num: true, valor: (e) => num(e.con_salario) },
-    { titulo: "Stack dominante", valor: (e) => `<span class="tags-oferta">${e.stack.map((s) => s.slug).join(", ")}</span>` },
+    { titulo: "Stack dominante", valor: (e) => `<span class="tags-oferta">${e.stack.map((s) => esc(s.slug)).join(", ")}</span>` },
   ], d);
 }
 
@@ -565,18 +570,18 @@ const PASO_OFERTAS = 50;
 let filasOfertas = [];
 
 const COLUMNAS_OFERTAS = [
-  { titulo: "Oferta", valor: (j) => `<a href="${j.url}" target="_blank" rel="noopener">${j.title}</a>` },
-  { titulo: "Empresa", valor: (j) => j.empresa || "—" },
-  { titulo: "Seniority", valor: (j) => j.seniority || "—" },
-  { titulo: "Modalidad", valor: (j) => j.remote_modality || "—" },
-  { titulo: "Dónde", valor: (j) => (j.paises.join(", ") || "—") + (j.ciudades.length ? ` · ${j.ciudades.join(", ")}` : "") },
+  { titulo: "Oferta", valor: (j) => `<a href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.title)}</a>` },
+  { titulo: "Empresa", valor: (j) => esc(j.empresa) || "—" },
+  { titulo: "Seniority", valor: (j) => esc(j.seniority) || "—" },
+  { titulo: "Modalidad", valor: (j) => esc(j.remote_modality) || "—" },
+  { titulo: "Dónde", valor: (j) => (j.paises.map(esc).join(", ") || "—") + (j.ciudades.length ? ` · ${j.ciudades.map(esc).join(", ")}` : "") },
   {
     titulo: `Sueldo ${MONEDA}`,
     num: true,
     valor: (j) => (j.min_salary || j.max_salary ? `${num(j.min_salary)}–${num(j.max_salary)}` : "—"),
   },
   { titulo: "Publicada", valor: (j) => (j.published_at ? new Date(j.published_at * 1000).toISOString().slice(0, 10) : "—") },
-  { titulo: "Tecnologías", valor: (j) => `<span class="tags-oferta">${j.tags.slice(0, 8).join(", ")}</span>` },
+  { titulo: "Tecnologías", valor: (j) => `<span class="tags-oferta">${j.tags.slice(0, 8).map(esc).join(", ")}</span>` },
 ];
 
 async function pintarOfertas(acumular = false) {
@@ -590,11 +595,6 @@ async function pintarOfertas(acumular = false) {
 }
 
 /* ------------------------------------------------------- ofertas para ti */
-
-/* Lo que viene de las ofertas (títulos, empresas) entra como texto, nunca como
-   HTML: es contenido de terceros. */
-const esc = (s) =>
-  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 const REMOTO_ES = {
   fully_remote: "100% remoto",
@@ -761,7 +761,11 @@ function montarTema() {
   };
 
   boton.addEventListener("click", () => {
-    localStorage.setItem("gob-tema", oscuroAhora() ? "claro" : "oscuro");
+    try {
+      localStorage.setItem("gob-tema", oscuroAhora() ? "claro" : "oscuro");
+    } catch (_) {
+      return;   // sin storage (p. ej. dentro de un iframe aislado) no hay cómo recordarlo
+    }
     // Chart.js congela los colores al crear el gráfico: recargar es más honesto
     // (y más corto) que reconstruir los siete a mano.
     location.reload();

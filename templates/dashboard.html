@@ -4,7 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Demanda técnica · Get on Board</title>
+  {% if estatico %}
+  <style>{{ estatico.css | safe }}</style>
+  {% else %}
   <link rel="stylesheet" href="/static/dashboard.css">
+  {% endif %}
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
@@ -12,7 +16,9 @@
        guardado; sin ninguno de los dos, decide el sistema. */
     (function () {
       var url = new URLSearchParams(location.search).get("tema");
-      var tema = url || localStorage.getItem("gob-tema");
+      var guardado = null;
+      try { guardado = localStorage.getItem("gob-tema"); } catch (e) { /* sin storage: decide el sistema */ }
+      var tema = url || guardado;
       if (tema === "oscuro") document.documentElement.dataset.theme = "dark";
       else if (tema === "claro") document.documentElement.dataset.theme = "light";
     })();
@@ -42,6 +48,13 @@
 </div>
 {% endif %}
 
+{% if estatico %}
+<div class="aviso aviso--estatico">
+  <strong>Versión estática</strong>, generada el {{ estatico.generado }} UTC con los datos de la última
+  ingesta. No tiene filtros: todas las cifras son sin filtrar. Para filtrar o ver datos más nuevos,
+  vuelve a correr la ingesta y <code>python scripts/exportar_estatico.py</code>, o usa el dashboard en vivo.
+</div>
+{% else %}
 <form class="filtros" method="get" action="/">
   <label>
     <span>Categoría</span>
@@ -97,6 +110,7 @@
     <a href="/" class="boton-fantasma">Limpiar</a>
   </div>
 </form>
+{% endif %}
 
 <section class="kpis" id="kpis" aria-label="Resumen"></section>
 
@@ -246,6 +260,12 @@
 </footer>
 
 <script>window.GOB_QUERY = {{ query | tojson }};</script>
+{% if estatico %}
+<script>window.GOB_ESTATICO = {{ estatico.datos | safe }};</script>
+<script>{{ estatico.shim | safe }}</script>
+<script>{{ estatico.js | safe }}</script>
+{% else %}
 <script src="/static/dashboard.js"></script>
+{% endif %}
 </body>
 </html>
