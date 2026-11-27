@@ -1,0 +1,71 @@
+# Perfil de búsqueda: TI, soporte e infraestructura — EDITABLE A MANO
+#
+# Cómo se lee este archivo (igual en los cuatro perfiles):
+#
+#   categorias       dónde buscar: slugs de categoría de Get on Board, los mismos
+#                    de la barra de filtros del dashboard.
+#   tambien_si_pide  una oferta de OTRA categoría entra igual si pide al menos uno
+#                    de estos tags. Hace falta porque los puestos de infra y redes
+#                    aparecen repartidos en 8 categorías distintas.
+#   fuerte           lo central del perfil. Se SUMA a data/mi_stack.yml y pesa
+#                    doble en el calce: una oferta que pide esto sube más.
+#                    Misma regla que mi_stack.yml: solo lo que defiendes hoy en
+#                    una entrevista técnica.
+#   condiciones      lo que quieres de la oferta. `obligatorio: true` descarta la
+#                    que no cumple; `false` solo suma o resta puntos. Si la oferta
+#                    no publica el dato (pasa mucho con el sueldo), nunca se descarta.
+#
+# Los nombres de tecnologías se slugifican y pasan por data/tag_aliases.yml, así
+# que da igual escribir "Virtualización", "virtualization" o "Virtualization".
+
+nombre: TI / soporte e infra
+descripcion: Soporte técnico, administración de servidores Linux, sysadmin y DevOps.
+
+categorias:
+  - technical-support
+  - sysadmin-devops-qa
+  - hardware-electronics
+
+tambien_si_pide:
+  - linux-administration
+  - technical-support
+  - it-support
+  - virtualization
+
+fuerte:
+  - Linux
+  - Administración de servidores
+  - Bash
+  - NGINX
+  - DNS
+  - VPN
+  - Redes
+  - Virtualización
+  - VPS
+  # Variantes: así nombra Get on Board cosas que ya haces. Bórralas si no aplican.
+  - Troubleshooting
+  - Technical Support
+  - IT Support
+  # Candidatas que piden estas ofertas. Descomenta solo si las defiendes hoy:
+  # - Windows Server
+  # - Active Directory
+  # - Docker
+
+condiciones:
+  remoto:
+    # Valores: fully_remote, remote_local, hybrid, temporarily_remote, no_remote
+    acepto: [fully_remote, remote_local, hybrid]
+    obligatorio: true
+  sueldo_minimo:
+    # USD brutos/mes (convención de Get on Board). Punto de partida, AJÚSTALO:
+    # en nov-2026 el p25 de technical-support es ~1.000 y el de sysadmin ~1.850.
+    usd: 1500
+    obligatorio: false
+  paises:
+    # Como aparecen en la barra de filtros. "Remoto" es como la API marca las remotas.
+    acepto: [Chile, Remoto]
+    obligatorio: false
+  jornada:
+    # Valores: full_time, part_time, freelance, internship
+    acepto: [full_time, freelance]
+    obligatorio: false

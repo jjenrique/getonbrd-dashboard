@@ -88,6 +88,20 @@ class Filtros:
         )
 
 
+def activas(jobs: Sequence[Job], snapshots: Sequence[Snapshot]) -> list[Job]:
+    """Las ofertas vistas en la última corrida de la ingesta.
+
+    La BD conserva todas las ofertas que alguna vez vio (para poder calcular
+    tendencias), así que tras varias corridas mezcla activas con vencidas. Para
+    decidir a qué postular solo sirven las que siguen publicadas. Sin snapshots
+    no hay forma de saberlo y se devuelve todo.
+    """
+    if not snapshots:
+        return list(jobs)
+    ultima = max(snapshots, key=lambda s: (s.run_at, s.id))
+    return [j for j in jobs if j.id in ultima.job_ids]
+
+
 def filtrar(jobs: Sequence[Job], filtros: Filtros | None = None) -> list[Job]:
     """Aplica los filtros del dashboard. Sin filtros, devuelve todo."""
     if filtros is None or not filtros.activos:

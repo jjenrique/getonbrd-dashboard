@@ -1,0 +1,49 @@
+# Perfil de búsqueda: backend y desarrollo web — EDITABLE A MANO
+# Qué significa cada campo: ver el encabezado de ti-infra.yml.
+
+nombre: Backend / desarrollo web
+descripcion: APIs y backend con Python o PHP, sobre Linux y NGINX.
+
+categorias:
+  - programacion
+
+# Python y SQL NO van acá a propósito: con ellos entrarían todas las ofertas de datos.
+tambien_si_pide:
+  - php
+  - django
+  - fastapi
+  - flask
+  - laravel
+  - backend
+
+fuerte:
+  - Python
+  - PHP
+  - SQL
+  - MySQL
+  - REST
+  - APIs
+  - Linux
+  - NGINX
+  - Git
+  # Candidatas que piden estas ofertas. Descomenta solo si las defiendes hoy
+  # (mi_stack.yml las deja fuera hasta tenerlas en producción):
+  # - Django
+  # - FastAPI
+  # - Docker
+  # - PostgreSQL
+
+condiciones:
+  remoto:
+    acepto: [fully_remote, remote_local, hybrid]
+    obligatorio: true
+  sueldo_minimo:
+    # Punto de partida, AJÚSTALO: en nov-2026 el p25 de programacion es ~2.000.
+    usd: 2000
+    obligatorio: false
+  paises:
+    acepto: [Chile, Remoto]
+    obligatorio: false
+  jornada:
+    acepto: [full_time, freelance]
+    obligatorio: false

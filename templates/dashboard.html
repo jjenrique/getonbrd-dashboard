@@ -4,7 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Demanda técnica · Get on Board</title>
+  {% if estatico %}
+  <style>{{ estatico.css | safe }}</style>
+  {% else %}
   <link rel="stylesheet" href="/static/dashboard.css">
+  {% endif %}
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
@@ -12,7 +16,9 @@
        guardado; sin ninguno de los dos, decide el sistema. */
     (function () {
       var url = new URLSearchParams(location.search).get("tema");
-      var tema = url || localStorage.getItem("gob-tema");
+      var guardado = null;
+      try { guardado = localStorage.getItem("gob-tema"); } catch (e) { /* sin storage: decide el sistema */ }
+      var tema = url || guardado;
       if (tema === "oscuro") document.documentElement.dataset.theme = "dark";
       else if (tema === "claro") document.documentElement.dataset.theme = "light";
     })();
@@ -42,6 +48,13 @@
 </div>
 {% endif %}
 
+{% if estatico %}
+<div class="aviso aviso--estatico">
+  <strong>Versión estática</strong>, generada el {{ estatico.generado }} UTC con los datos de la última
+  ingesta. No tiene filtros: todas las cifras son sin filtrar. Para filtrar o ver datos más nuevos,
+  vuelve a correr la ingesta y <code>python scripts/exportar_estatico.py</code>, o usa el dashboard en vivo.
+</div>
+{% else %}
 <form class="filtros" method="get" action="/">
   <label>
     <span>Categoría</span>
@@ -97,10 +110,43 @@
     <a href="/" class="boton-fantasma">Limpiar</a>
   </div>
 </form>
+{% endif %}
 
 <section class="kpis" id="kpis" aria-label="Resumen"></section>
 
 <main class="rejilla">
+
+  <section class="tarjeta tarjeta--ancha" id="seccion-calce">
+    <header class="tarjeta__cabecera">
+      <div>
+        <h2>Ofertas para ti</h2>
+        <p class="sub">
+          Cruza las ofertas <strong>activas</strong> con cada perfil de <code>data/perfiles/</code>:
+          dónde buscar, tu stack y lo que quieres de la oferta. Arriba, en qué perfil hay más
+          oportunidad hoy; abajo, las mejores del perfil elegido.
+        </p>
+      </div>
+    </header>
+    <div id="avisos-perfiles"></div>
+    <div class="perfiles" id="perfiles" role="group" aria-label="Perfiles de búsqueda"></div>
+    <div id="detalle-perfil"></div>
+    <div id="tabla-calce"></div>
+    <div class="paginador"><button id="mas-calce" type="button" hidden>Ver más</button></div>
+    <details class="tabla-alterna">
+      <summary>Cómo se calcula el puntaje</summary>
+      <div class="sub explicacion">
+        <p><strong>Calce técnico</strong>: qué parte de lo que pide la oferta ya cubres con
+          <code>mi_stack.yml</code> más lo <em>fuerte</em> del perfil. Lo fuerte pesa doble y lo
+          deducido del texto, la mitad. Una oferta con menos de 5 tags cuenta como si tuviera 5,
+          porque pocos tags es poca evidencia.</p>
+        <p><strong>Puntaje</strong>: 80% calce técnico y 20% condiciones deseables (cumple, no
+          cumple o no lo publica, que vale la mitad). Las condiciones <em>obligatorias</em> no
+          suman: descartan, salvo que la oferta no publique el dato.</p>
+        <p><strong>Buen calce</strong>: cubres al menos la mitad de lo que piden. Casi ninguna
+          oferta se cubre entera: la lista de tags es una carta a los Reyes, no un requisito.</p>
+      </div>
+    </details>
+  </section>
 
   <section class="tarjeta tarjeta--ancha">
     <header class="tarjeta__cabecera">
@@ -214,6 +260,12 @@
 </footer>
 
 <script>window.GOB_QUERY = {{ query | tojson }};</script>
+{% if estatico %}
+<script>window.GOB_ESTATICO = {{ estatico.datos | safe }};</script>
+<script>{{ estatico.shim | safe }}</script>
+<script>{{ estatico.js | safe }}</script>
+{% else %}
 <script src="/static/dashboard.js"></script>
+{% endif %}
 </body>
 </html>

@@ -10,6 +10,8 @@ mercado tech LATAM/Chile:
 - ¿Qué está creciendo o cayendo entre snapshots?
 - ¿Qué empresas publican más y con qué stack?
 - **Brechas**: dado mi stack actual, qué tecnologías me faltan y cuánto me abriría cada una.
+- **Ofertas para ti**: con varios perfiles de búsqueda (TI, redes, datos, backend…), en cuál hay
+  más oportunidad hoy y qué ofertas calzan mejor con mi stack y con lo que pido de la oferta.
 
 > Solo API pública, nada de scraping del HTML del sitio. Sin credenciales: la API pública no las
 > necesita, así que el repo no tiene `.env` ni secretos.
@@ -64,7 +66,19 @@ python -m gob.ingest --refresh-aliases
 
 # Ver el análisis por consola, sin dashboard
 python scripts/reporte.py --tag python --categoria programacion
+
+# Congelar el dashboard en un solo HTML que se abre sin servidor -> dist/dashboard.html
+python scripts/exportar_estatico.py
 ```
+
+### Verlo sin servidor
+
+`scripts/exportar_estatico.py` deja el dashboard en **un solo archivo HTML** (~1,7 MB con 967
+ofertas activas) que se abre en cualquier navegador, también en el teléfono, sin uvicorn. Le pide
+cada ruta a la app real y guarda las respuestas dentro de la página; un `fetch` de reemplazo
+([`static/estatico.js`](static/estatico.js)) contesta desde ahí, así que es el mismo dashboard
+con los mismos números. Se puede abrir tal cual, subir a un hosting estático o publicar como
+página. La barra de filtros no existe en esta versión: todas las cifras van sin filtrar.
 
 Opciones útiles de la ingesta: `--db RUTA`, `--sandbox`, `--per-page N` (máx. 120), `--rate N`
 (peticiones por segundo, 2 por defecto), `--lang es|en|pt`, `-v`.
@@ -85,6 +99,7 @@ reingesta se ve sin reiniciar el servidor.
 
 | Panel | Qué contesta |
 |---|---|
+| Ofertas para ti | en qué perfil de búsqueda hay más oportunidad y qué ofertas **activas** calzan mejor con cada uno |
 | Barra de filtros | categoría, seniority, remoto, país y rango de fechas; se aplican a todo lo demás |
 | KPIs | ofertas, empresas, tecnologías, % remoto y mediana de sueldo con su cobertura |
 | Top 25 tecnologías | barras apiladas que separan el **tag oficial** de lo **deducido del texto** |
@@ -111,11 +126,51 @@ Así que ordena por **volumen** y acompaña con la **afinidad**: qué porcentaje
 ofertas ya cubres. Es lo que separa "lo piden muchos y estás cerca" de "lo piden muchos pero es
 otro mundo" — con el mismo volumen, `jira` (10%) y `typescript` (19%) no significan lo mismo.
 
+### Sobre la sección de perfiles
+
+Uno no busca trabajo de una sola cosa. Cada archivo de [`data/perfiles/`](data/perfiles/) es un
+perfil de búsqueda con cuatro partes:
+
+- **Dónde buscar**: `categorias` de Get on Board, más `tambien_si_pide`, una lista de tags que
+  hacen entrar ofertas de otras categorías.
+- **Tu stack**: `mi_stack.yml` más lo `fuerte` del perfil, que pesa doble.
+- **Lo que quieres de la oferta**: modalidad remota, sueldo mínimo, país y jornada. Cada
+  condición es **obligatoria** (descarta) o **deseable** (suma puntos).
+- **Descripción**: el nombre y una línea para la UI.
+
+La sección compara primero los perfiles entre sí: cuántas ofertas con **buen calce** (cubres al
+menos la mitad de lo que piden) tiene cada uno, su mejor puntaje, la mediana de sueldo de esas
+ofertas y lo que más falta entre tus 20 mejores calces. Debajo va el ranking del perfil elegido,
+con lo que tienes, lo que te falta y cada condición marcada como ✓, ✗ o ? (no publicado).
+
+![Ofertas para ti](docs/capturas/ofertas-para-ti.png)
+
+**Solo mira ofertas activas**, las de la última corrida de la ingesta. La BD conserva todo lo que
+vio alguna vez (lo necesita para las tendencias), y en nov-2026 eso eran 1.785 ofertas de las
+que solo 967 seguían publicadas.
+
+La fórmula salió de probarla contra los datos reales, no de un diseño previo:
+
+- **Categorías + `tambien_si_pide`, no solo categorías.** Get on Board no tiene categoría de
+  redes: los puestos de redes y telecom aparecen repartidos en 8 categorías.
+- **`tambien_si_pide` explícito, no "cualquier oferta que pida 2 de tus fuertes".** Así se
+  probó primero, pero Python y SQL los pide medio mercado: el perfil de backend se llenaba de
+  ofertas de datos y el de TI de desarrolladores Siebel.
+- **Lo deducido del texto pesa la mitad.** La extracción por keywords también caza lo que la
+  oferta menciona como deseable, no como requisito.
+- **Denominador mínimo de 5.** Sin eso, una oferta que solo pide `python` calzaba al 100%.
+- **Las condiciones sin dato no descartan.** El 62% de las ofertas no publica sueldo: un sueldo
+  mínimo obligatorio que las tirara dejaría el ranking casi vacío.
+
+Con el stack y los perfiles de ejemplo, en nov-2026 salían 31 ofertas con buen calce en datos,
+19 en backend, 7 en TI y 0 en redes, donde 22 de las 63 candidatas eran presenciales.
+
 ## Los ficheros que puedes editar a mano
 
 | Archivo | Para qué |
 |---|---|
-| [`data/mi_stack.yml`](data/mi_stack.yml) | Tu stack actual, para el panel de brechas |
+| [`data/mi_stack.yml`](data/mi_stack.yml) | Tu stack actual, para el panel de brechas y como base de cada perfil |
+| [`data/perfiles/*.yml`](data/perfiles/) | Un perfil de búsqueda por archivo: dónde buscar, lo fuerte y qué pides de la oferta. Se releen solos; uno con errores sale como aviso sin tumbar al resto. Los que empiezan con `_` se ignoran |
 | [`data/tag_aliases.yml`](data/tag_aliases.yml) | Agrupar duplicados semánticos (`angularjs` → `angular`, `net` → `dotnet`) y puentear del castellano al slug de la API. Tras editarlo: `--refresh-aliases` |
 | [`data/tech_keywords.yml`](data/tech_keywords.yml) | Tecnologías a buscar en el texto de la oferta, para lo que los tags oficiales no cubren (SCADA, Modbus, Airflow…). Tras editarlo hay que reprocesar: `--from-cache` |
 
@@ -125,7 +180,7 @@ el nombre no casa con ningún tag. Lo segundo se arregla con un alias.
 ## Tests
 
 ```bash
-pytest -q          # 180 tests, ~3 s
+pytest -q          # 240 tests, ~3 s
 ```
 
 Con fixtures fijas y **sin salir a internet**: `tests/conftest.py` bloquea la resolución de nombres
@@ -164,11 +219,13 @@ src/gob/
   ingest.py     descarga + upsert idempotente + snapshots  (python -m gob.ingest)
   queries.py    SELECTs que alimentan a analytics
   analytics.py  agregaciones puras, sin BD ni red
+  calce.py      calce oferta ↔ perfil: puntaje, condiciones y comparación (puro)
+  perfiles.py   lee y valida data/perfiles/*.yml
   web.py        app FastAPI: solo rutas y render
-templates/ static/   dashboard (Jinja2 + Chart.js por CDN, sin build step)
-data/         tag_aliases.yml · tech_keywords.yml · mi_stack.yml  (editables a mano)
+templates/ static/   dashboard (Jinja2 + Chart.js por CDN, sin build step); estatico.js para la versión sin servidor
+data/         tag_aliases.yml · tech_keywords.yml · mi_stack.yml · perfiles/  (editables a mano)
 data/raw/     JSON crudo por página y snapshot (no versionado)
 docs/         API.md · api-samples/ · capturas/
-scripts/      fetch_samples.py · reporte.py
+scripts/      fetch_samples.py · reporte.py · exportar_estatico.py
 tests/        fixtures fijas, sin red
 ```

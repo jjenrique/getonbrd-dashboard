@@ -17,15 +17,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from fastapi import Depends, FastAPI, Query, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from . import analytics as A
+from . import calce as C
 from . import config, queries
 from .models import connect, init_db
 from .normalize import load_aliases, load_my_stack
+from .perfiles import load_perfiles
 
 app = FastAPI(title="Demanda técnica · Get on Board", docs_url="/docs")
 app.mount("/static", StaticFiles(directory=config.STATIC_DIR), name="static")
@@ -52,13 +54,18 @@ class Store:
         self._opciones: dict[str, list] = {"categorias": [], "seniorities": [], "paises": []}
         self._estado: dict[str, Any] = {}
         self._stack: frozenset[str] = frozenset()
+        self._perfiles: list[C.Perfil] = []
+        self._errores_perfiles: list[str] = []
 
     def refresh(self) -> None:
         mtime = self.db_path.stat().st_mtime if self.db_path.exists() else None
-        # El stack y los alias son archivos que el usuario edita a mano: se
-        # releen en cada refresco, no solo al arrancar.
+        # El stack, los alias y los perfiles son archivos que el usuario edita a
+        # mano: se releen en cada refresco, no solo al arrancar.
         aliases = load_aliases(config.TAG_ALIASES_PATH)
         self._stack = frozenset(load_my_stack(config.MI_STACK_PATH, aliases))
+        self._perfiles, self._errores_perfiles = load_perfiles(
+            config.PERFILES_DIR, aliases, self._stack
+        )
         if mtime == self._mtime:
             return
 
@@ -97,6 +104,12 @@ class Store:
     def mi_stack(self) -> frozenset[str]:
         self.refresh()
         return self._stack
+
+    @property
+    def perfiles(self) -> tuple[list[C.Perfil], list[str]]:
+        """(perfiles que cargaron, errores de los que no)."""
+        self.refresh()
+        return self._perfiles, self._errores_perfiles
 
 
 store = Store(config.DB_PATH)
@@ -147,22 +160,28 @@ def _jobs(filtros: A.Filtros) -> list[A.Job]:
 # -------------------------------------------------------------------- página
 
 
+def contexto_pagina(query: str = "", valores: dict[str, str] | None = None) -> dict[str, Any]:
+    """Lo que necesita templates/dashboard.html. Aparte de la ruta para que
+    scripts/exportar_estatico.py renderice exactamente la misma página."""
+    return {
+        "estado": store.estado,
+        "opciones": store.opciones,
+        "seniority_es": SENIORITY_ES,
+        "query": query,
+        "valores": valores or {},
+        "n_snapshots": len(store.snapshots),
+        "moneda": config.ASSUMED_CURRENCY,
+        "mi_stack": sorted(store.mi_stack),
+        "estatico": None,
+    }
+
+
 @app.get("/")
 def dashboard(request: Request, filtros: A.Filtros = Filtrados):
-    opciones = store.opciones
     return templates.TemplateResponse(
         request,
         "dashboard.html",
-        {
-            "estado": store.estado,
-            "opciones": opciones,
-            "seniority_es": SENIORITY_ES,
-            "query": str(request.url.query),
-            "valores": dict(request.query_params),
-            "n_snapshots": len(store.snapshots),
-            "moneda": config.ASSUMED_CURRENCY,
-            "mi_stack": sorted(store.mi_stack),
-        },
+        contexto_pagina(str(request.url.query), dict(request.query_params)),
     )
 
 
@@ -276,6 +295,103 @@ def api_brechas(limit: int = 20, filtros: A.Filtros = Filtrados):
         "sin_demanda": list(informe.sin_demanda),
         "items": [asdict(b) for b in informe.items],
         "stack_vacio": not informe.stack,
+    }
+
+
+def _activas(filtros: A.Filtros) -> list[A.Job]:
+    """Para postular solo sirven las ofertas que siguen publicadas."""
+    return A.filtrar(A.activas(store.jobs, store.snapshots), filtros)
+
+
+def _perfil_json(p: C.Perfil) -> dict[str, Any]:
+    return {
+        "slug": p.slug,
+        "nombre": p.nombre,
+        "descripcion": p.descripcion,
+        "categorias": sorted(p.categorias),
+        "fuerte": sorted(p.fuerte),
+        "condiciones": [
+            {
+                "clave": c.clave,
+                "obligatorio": c.obligatorio,
+                "acepto": sorted(c.acepto),
+                "minimo": c.minimo,
+            }
+            for c in p.condiciones
+        ],
+    }
+
+
+@app.get("/api/perfiles")
+def api_perfiles(filtros: A.Filtros = Filtrados):
+    perfiles, errores = store.perfiles
+    jobs = _activas(filtros)
+    ultimo = store.estado.get("ultimo_snapshot") or {}
+    return {
+        "activas": len(jobs),
+        "ultima_ingesta": ultimo.get("run_at"),
+        "umbral_buen_calce": round(100 * C.UMBRAL_BUEN_CALCE),
+        "top_te_abriria": C.TOP_TE_ABRIRIA,
+        "moneda": config.ASSUMED_CURRENCY,
+        "errores": errores,
+        "perfiles": [
+            {
+                "perfil": _perfil_json(r.perfil),
+                "candidatas": r.candidatas,
+                "descartadas": r.descartadas,
+                "descartadas_por": [{"clave": k, "n": n} for k, n in r.descartadas_por],
+                "evaluadas": r.evaluadas,
+                "buen_calce": r.buen_calce,
+                "mejor_puntaje": r.mejor_puntaje,
+                "mediana_salario_buen_calce": r.mediana_salario_buen_calce,
+                "n_salario_buen_calce": r.n_salario_buen_calce,
+                "te_abriria": [{"slug": s, "n": n} for s, n in r.te_abriria],
+            }
+            for r in C.comparar_perfiles(jobs, perfiles)
+        ],
+    }
+
+
+@app.get("/api/calce")
+def api_calce(perfil: str, limit: int = 25, offset: int = 0, filtros: A.Filtros = Filtrados):
+    perfiles, _ = store.perfiles
+    elegido = next((p for p in perfiles if p.slug == perfil), None)
+    if elegido is None:
+        raise HTTPException(404, f"no hay perfil {perfil!r} en data/perfiles/")
+    informe = C.calzar(_activas(filtros), elegido)
+    pagina = informe.items[offset : offset + limit]
+    return {
+        "perfil": _perfil_json(elegido),
+        "candidatas": informe.candidatas,
+        "descartadas": informe.descartadas,
+        "descartadas_por": [{"clave": k, "n": n} for k, n in informe.descartadas_por],
+        "total": len(informe.items),
+        "buen_calce": informe.buen_calce,
+        "offset": offset,
+        "items": [
+            {
+                "id": c.job.id,
+                "title": c.job.title,
+                "url": c.job.url,
+                "empresa": c.job.company_name,
+                "categoria": c.job.category_name,
+                "seniority": SENIORITY_ES.get(c.job.seniority or "", c.job.seniority),
+                "remote_modality": c.job.remote_modality,
+                "min_salary": c.job.min_salary,
+                "max_salary": c.job.max_salary,
+                "published_at": c.job.published_at,
+                "puntaje": c.puntaje,
+                "tecnico": round(100 * c.tecnico),
+                "condiciones": None if c.condiciones is None else round(100 * c.condiciones),
+                "buen_calce": c.buen_calce,
+                "por_categoria": c.por_categoria,
+                "tiene": list(c.tiene),
+                "fuertes": [s for s in c.tiene if s in elegido.fuerte],
+                "falta": list(c.falta),
+                "chequeos": [asdict(ch) for ch in c.chequeos],
+            }
+            for c in pagina
+        ],
     }
 
 

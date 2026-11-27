@@ -33,6 +33,11 @@ const nf = new Intl.NumberFormat("es-CL");
 const num = (n) => (n === null || n === undefined ? "—" : nf.format(Math.round(n)));
 const pct = (n) => (n === null || n === undefined ? "—" : `${Math.round(n)}%`);
 
+/* Lo que viene de las ofertas (títulos, empresas) entra como texto, nunca como
+   HTML: es contenido de terceros. */
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
 async function traer(ruta, extra = "") {
   const sep = Q && extra ? "&" : "";
   const qs = [Q, extra].filter(Boolean).join(sep);
@@ -194,7 +199,7 @@ async function pintarTop() {
   });
 
   tabla($("#tabla-top"), [
-    { titulo: "Tecnología", valor: (d) => d.slug + (d.solo_texto ? ' <span class="marca-texto">solo texto</span>' : "") },
+    { titulo: "Tecnología", valor: (d) => esc(d.slug) + (d.solo_texto ? ' <span class="marca-texto">solo texto</span>' : "") },
     { titulo: "Ofertas", num: true, valor: (d) => num(d.ofertas) },
     { titulo: "Tag oficial", num: true, valor: (d) => num(d.api) },
     { titulo: "Del texto", num: true, valor: (d) => num(d.texto) },
@@ -238,7 +243,7 @@ async function pintarSeniority() {
   tabla(
     $("#tabla-seniority"),
     [
-      { titulo: "Tecnología", valor: (f) => f.slug },
+      { titulo: "Tecnología", valor: (f) => esc(f.slug) },
       ...d.seniorities.map((s, i) => ({ titulo: s.nombre, num: true, valor: (f) => num(f.conteos[i]) })),
       { titulo: "Total", num: true, valor: (f) => num(f.conteos.reduce((a, b) => a + b, 0)) },
     ],
@@ -348,7 +353,7 @@ async function pintarTendencia() {
   tabla(
     $("#tabla-tendencia"),
     [
-      { titulo: "Tecnología", valor: (s) => s.slug },
+      { titulo: "Tecnología", valor: (s) => esc(s.slug) },
       ...etiquetas.map((e, i) => ({ titulo: e, num: true, valor: (s) => num(s.puntos[i]?.ofertas) })),
       { titulo: "Variación", num: true, valor: (s) => (s.variacion === null ? "—" : (s.variacion > 0 ? "+" : "") + s.variacion) },
     ],
@@ -432,7 +437,7 @@ async function pintarCoocurrencia(tag) {
   });
 
   tabla($("#tabla-coocurrencia"), [
-    { titulo: "Tecnología", valor: (c) => c.slug },
+    { titulo: "Tecnología", valor: (c) => esc(c.slug) },
     { titulo: "Juntas", num: true, valor: (c) => num(c.juntas) },
     { titulo: `% de ${tag}`, num: true, valor: (c) => pct(c.pct) },
     { titulo: "Lift", num: true, valor: (c) => c.lift.toFixed(2) },
@@ -441,7 +446,7 @@ async function pintarCoocurrencia(tag) {
 
 function montarSelectorCoocurrencia(top) {
   const sel = $("#selector-coocurrencia");
-  sel.innerHTML = top.slice(0, 30).map((t) => `<option value="${t.slug}">${t.slug}</option>`).join("");
+  sel.innerHTML = top.slice(0, 30).map((t) => `<option value="${esc(t.slug)}">${esc(t.slug)}</option>`).join("");
   sel.addEventListener("change", () => pintarCoocurrencia(sel.value));
   if (top.length) pintarCoocurrencia(top[0].slug);
 }
@@ -490,7 +495,7 @@ async function pintarSalarios() {
   });
 
   tabla($("#tabla-salarios"), [
-    { titulo: "Tecnología", valor: (s) => s.slug },
+    { titulo: "Tecnología", valor: (s) => esc(s.slug) },
     { titulo: "Mediana", num: true, valor: (s) => num(s.mediana) },
     { titulo: "p25", num: true, valor: (s) => num(s.p25) },
     { titulo: "p75", num: true, valor: (s) => num(s.p75) },
@@ -520,7 +525,7 @@ async function pintarBrechas() {
   const cuerpo = d.items
     .map(
       (b) => `<tr>
-        <td>${b.slug}${b.solo_texto ? ' <span class="marca-texto">solo texto</span>' : ""}</td>
+        <td>${esc(b.slug)}${b.solo_texto ? ' <span class="marca-texto">solo texto</span>' : ""}</td>
         <td class="num">${num(b.ofertas)}</td>
         <td style="width:34%"><span class="barra-mini" style="width:${(100 * b.ofertas) / maximo}%"></span></td>
         <td class="num">${pct(b.afinidad)}</td>
@@ -531,7 +536,7 @@ async function pintarBrechas() {
   const cola = d.sin_demanda.length
     ? `<p class="sub" style="margin-top:12px">
          <strong>En tu stack pero sin demanda aquí (${d.sin_demanda.length}):</strong>
-         ${d.sin_demanda.join(", ")}.
+         ${d.sin_demanda.map(esc).join(", ")}.
          O el mercado no lo pide, o el nombre no casa con ningún tag — en ese segundo caso
          se arregla con un alias en <code>data/tag_aliases.yml</code>.
        </p>`
@@ -551,10 +556,10 @@ async function pintarBrechas() {
 async function pintarEmpresas() {
   const d = await traer("/api/empresas", "limit=15");
   tabla($("#tabla-empresas"), [
-    { titulo: "Empresa", valor: (e) => e.name },
+    { titulo: "Empresa", valor: (e) => esc(e.name) },
     { titulo: "Ofertas", num: true, valor: (e) => num(e.ofertas) },
     { titulo: "Con sueldo", num: true, valor: (e) => num(e.con_salario) },
-    { titulo: "Stack dominante", valor: (e) => `<span class="tags-oferta">${e.stack.map((s) => s.slug).join(", ")}</span>` },
+    { titulo: "Stack dominante", valor: (e) => `<span class="tags-oferta">${e.stack.map((s) => esc(s.slug)).join(", ")}</span>` },
   ], d);
 }
 
@@ -565,18 +570,18 @@ const PASO_OFERTAS = 50;
 let filasOfertas = [];
 
 const COLUMNAS_OFERTAS = [
-  { titulo: "Oferta", valor: (j) => `<a href="${j.url}" target="_blank" rel="noopener">${j.title}</a>` },
-  { titulo: "Empresa", valor: (j) => j.empresa || "—" },
-  { titulo: "Seniority", valor: (j) => j.seniority || "—" },
-  { titulo: "Modalidad", valor: (j) => j.remote_modality || "—" },
-  { titulo: "Dónde", valor: (j) => (j.paises.join(", ") || "—") + (j.ciudades.length ? ` · ${j.ciudades.join(", ")}` : "") },
+  { titulo: "Oferta", valor: (j) => `<a href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.title)}</a>` },
+  { titulo: "Empresa", valor: (j) => esc(j.empresa) || "—" },
+  { titulo: "Seniority", valor: (j) => esc(j.seniority) || "—" },
+  { titulo: "Modalidad", valor: (j) => esc(j.remote_modality) || "—" },
+  { titulo: "Dónde", valor: (j) => (j.paises.map(esc).join(", ") || "—") + (j.ciudades.length ? ` · ${j.ciudades.map(esc).join(", ")}` : "") },
   {
     titulo: `Sueldo ${MONEDA}`,
     num: true,
     valor: (j) => (j.min_salary || j.max_salary ? `${num(j.min_salary)}–${num(j.max_salary)}` : "—"),
   },
   { titulo: "Publicada", valor: (j) => (j.published_at ? new Date(j.published_at * 1000).toISOString().slice(0, 10) : "—") },
-  { titulo: "Tecnologías", valor: (j) => `<span class="tags-oferta">${j.tags.slice(0, 8).join(", ")}</span>` },
+  { titulo: "Tecnologías", valor: (j) => `<span class="tags-oferta">${j.tags.slice(0, 8).map(esc).join(", ")}</span>` },
 ];
 
 async function pintarOfertas(acumular = false) {
@@ -587,6 +592,157 @@ async function pintarOfertas(acumular = false) {
   const boton = $("#mas-ofertas");
   boton.disabled = filasOfertas.length >= d.total;
   boton.textContent = boton.disabled ? "No hay más" : `Ver ${Math.min(PASO_OFERTAS, d.total - filasOfertas.length)} más`;
+}
+
+/* ------------------------------------------------------- ofertas para ti */
+
+const REMOTO_ES = {
+  fully_remote: "100% remoto",
+  remote_local: "remoto local",
+  hybrid: "híbrido",
+  temporarily_remote: "remoto temporal",
+  no_remote: "presencial",
+};
+const JORNADA_ES = { full_time: "full time", part_time: "part time", freelance: "freelance", internship: "práctica" };
+const CONDICION_ES = { remoto: "modalidad", sueldo_minimo: "sueldo", paises: "país", jornada: "jornada" };
+
+const capital = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const unirO = (xs) => (xs.length <= 1 ? xs.join("") : `${xs.slice(0, -1).join(", ")} o ${xs[xs.length - 1]}`);
+
+function describirCondicion(c) {
+  if (c.clave === "sueldo_minimo") return `sueldo ≥ ${num(c.minimo)} ${MONEDA}`;
+  if (c.clave === "remoto") return unirO(c.acepto.map((v) => REMOTO_ES[v] || v));
+  if (c.clave === "jornada") return unirO(c.acepto.map((v) => JORNADA_ES[v] || v));
+  return `país: ${unirO(c.acepto.map(capital))}`;
+}
+
+function textoChequeo(ch) {
+  if (ch.cumple === null) return ch.clave === "sueldo_minimo" ? "sueldo no publicado" : `${CONDICION_ES[ch.clave]} sin dato`;
+  if (ch.clave === "remoto") return REMOTO_ES[ch.detalle] || ch.detalle;
+  if (ch.clave === "jornada") return JORNADA_ES[ch.detalle] || ch.detalle;
+  if (ch.clave === "sueldo_minimo") return ch.detalle.split("–").map((n) => num(Number(n))).join("–");
+  return ch.detalle;
+}
+
+function chequeo(ch) {
+  const estado = ch.cumple === null ? "nd" : ch.cumple ? "si" : "no";
+  const simbolo = { si: "✓", no: "✗", nd: "?" }[estado];
+  const tipo = ch.obligatorio ? "obligatorio" : "deseable";
+  return `<span class="chequeo chequeo--${estado}" title="${CONDICION_ES[ch.clave]} (${tipo})">${simbolo} ${esc(textoChequeo(ch))}</span>`;
+}
+
+let perfilElegido = null;
+let offsetCalce = 0;
+const PASO_CALCE = 25;
+let filasCalce = [];
+
+async function pintarPerfiles() {
+  const d = await traer("/api/perfiles");
+  const avisos = d.errores.map(
+    (e) => `<div class="aviso"><strong>Perfil con errores, no se cargó:</strong> ${esc(e)}</div>`
+  );
+  if (!d.perfiles.length) {
+    avisos.push(`<p class="vacio">No hay perfiles. Crea uno en <code>data/perfiles/</code>
+      copiando cualquiera de los de ejemplo, y recarga.</p>`);
+  }
+  $("#avisos-perfiles").innerHTML = avisos.join("");
+  if (!d.perfiles.length) return;
+
+  let guardado = null;
+  try { guardado = localStorage.getItem("gob-perfil"); } catch (_) { /* sin storage: da igual */ }
+  const slugs = d.perfiles.map((r) => r.perfil.slug);
+  perfilElegido = slugs.includes(guardado) ? guardado : slugs[0];
+
+  const contenedor = $("#perfiles");
+  contenedor.innerHTML = d.perfiles
+    .map((r, i) => {
+      const sueldo = r.mediana_salario_buen_calce
+        ? `mediana ${num(r.mediana_salario_buen_calce)} ${d.moneda} <span class="apagado">(n=${r.n_salario_buen_calce})</span>`
+        : `sin sueldos publicados`;
+      const abriria = r.te_abriria.length
+        ? `Lo que más te falta: ${r.te_abriria.slice(0, 3).map((t) => esc(t.slug)).join(", ")}`
+        : "";
+      const insignia = i === 0 && r.buen_calce > 0 ? '<span class="perfil__insignia">más oportunidad</span>' : "";
+      return `<button type="button" class="perfil" data-slug="${esc(r.perfil.slug)}" aria-pressed="false">
+        <span class="perfil__nombre">${esc(r.perfil.nombre)} ${insignia}</span>
+        <span class="perfil__valor">${num(r.buen_calce)}</span>
+        <span class="perfil__etiqueta">con buen calce, de ${num(r.evaluadas)} que cumplen lo obligatorio</span>
+        <span class="perfil__nota">Mejor puntaje: ${r.mejor_puntaje ?? "—"} · Sueldo del buen calce: ${sueldo}</span>
+        ${abriria ? `<span class="perfil__nota">${abriria}</span>` : ""}
+      </button>`;
+    })
+    .join("");
+
+  contenedor.querySelectorAll(".perfil").forEach((b) =>
+    b.addEventListener("click", () => {
+      perfilElegido = b.dataset.slug;
+      try { localStorage.setItem("gob-perfil", perfilElegido); } catch (_) { /* idem */ }
+      offsetCalce = 0;
+      marcarPerfil();
+      pintarCalce();
+    })
+  );
+  marcarPerfil();
+  await pintarCalce();
+}
+
+function marcarPerfil() {
+  document.querySelectorAll(".perfil").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.slug === perfilElegido)));
+}
+
+const COLUMNAS_CALCE = [
+  {
+    titulo: "Puntaje",
+    num: true,
+    valor: (c) => `<span class="puntaje">${c.puntaje}</span><span class="barra-mini" style="width:${c.puntaje}%"></span>`,
+  },
+  {
+    titulo: "Oferta",
+    valor: (c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title)}</a>
+      <div class="apagado">${[c.empresa, c.seniority, c.categoria].filter(Boolean).map(esc).join(" · ")}
+      ${c.por_categoria ? "" : ' <span class="marca-fuera" title="Es de otra categoría, pero pide algo de tambien_si_pide">otra categoría</span>'}</div>`,
+  },
+  { titulo: "Calce técnico", num: true, valor: (c) => pct(c.tecnico) },
+  {
+    titulo: "Tienes",
+    valor: (c) =>
+      `<span class="tags-oferta">${c.tiene
+        .slice(0, 7)
+        .map((s) => (c.fuertes.includes(s) ? `<strong>${esc(s)}</strong>` : esc(s)))
+        .join(", ")}</span>`,
+  },
+  { titulo: "Te falta", valor: (c) => `<span class="tags-oferta">${c.falta.slice(0, 5).map(esc).join(", ") || "—"}</span>` },
+  { titulo: "Condiciones", valor: (c) => `<span class="chequeos">${c.chequeos.map(chequeo).join("")}</span>` },
+  { titulo: "Publicada", valor: (c) => (c.published_at ? new Date(c.published_at * 1000).toISOString().slice(0, 10) : "—") },
+];
+
+async function pintarCalce(acumular = false) {
+  if (!perfilElegido) return;
+  const d = await traer("/api/calce", `perfil=${encodeURIComponent(perfilElegido)}&limit=${PASO_CALCE}&offset=${offsetCalce}`);
+  filasCalce = acumular ? filasCalce.concat(d.items) : d.items;
+
+  const obligatorias = d.perfil.condiciones.filter((c) => c.obligatorio).map(describirCondicion);
+  const deseables = d.perfil.condiciones.filter((c) => !c.obligatorio).map(describirCondicion);
+  const por = d.descartadas_por.map((x) => `${num(x.n)} por ${CONDICION_ES[x.clave]}`).join(", ");
+  $("#detalle-perfil").innerHTML = `<div class="detalle-perfil">
+      <p><strong>${esc(d.perfil.nombre)}</strong> — ${esc(d.perfil.descripcion)}</p>
+      <p class="sub">
+        ${obligatorias.length ? `<strong>Obligatorio:</strong> ${esc(obligatorias.join(" · "))}. ` : ""}
+        ${deseables.length ? `<strong>Suma puntos:</strong> ${esc(deseables.join(" · "))}.` : ""}
+      </p>
+      <p class="sub">
+        ${num(d.candidatas)} ofertas activas son de este perfil;
+        ${d.descartadas ? `${num(d.descartadas)} quedan fuera por lo obligatorio (${por}); ` : ""}
+        quedan <strong>${num(d.total)}</strong>, ${num(d.buen_calce)} con buen calce.
+        En negrita, lo fuerte del perfil.
+      </p>
+    </div>`;
+
+  tabla($("#tabla-calce"), COLUMNAS_CALCE, filasCalce);
+  const boton = $("#mas-calce");
+  boton.hidden = d.total <= PASO_CALCE;
+  boton.disabled = filasCalce.length >= d.total;
+  boton.textContent = boton.disabled ? "No hay más" : `Ver ${Math.min(PASO_CALCE, d.total - filasCalce.length)} más`;
 }
 
 /* ------------------------------------------------------------------- tema */
@@ -605,7 +761,11 @@ function montarTema() {
   };
 
   boton.addEventListener("click", () => {
-    localStorage.setItem("gob-tema", oscuroAhora() ? "claro" : "oscuro");
+    try {
+      localStorage.setItem("gob-tema", oscuroAhora() ? "claro" : "oscuro");
+    } catch (_) {
+      return;   // sin storage (p. ej. dentro de un iframe aislado) no hay cómo recordarlo
+    }
     // Chart.js congela los colores al crear el gráfico: recargar es más honesto
     // (y más corto) que reconstruir los siete a mano.
     location.reload();
@@ -631,6 +791,7 @@ async function iniciar() {
   montarSelectorCoocurrencia(top);
 
   await Promise.all([
+    pintarPerfiles(),
     pintarSeniority(),
     pintarTendencia(),
     pintarSalarios(),
@@ -642,6 +803,10 @@ async function iniciar() {
   $("#mas-ofertas").addEventListener("click", () => {
     offsetOfertas += PASO_OFERTAS;
     pintarOfertas(true);
+  });
+  $("#mas-calce").addEventListener("click", () => {
+    offsetCalce += PASO_CALCE;
+    pintarCalce(true);
   });
 }
 
